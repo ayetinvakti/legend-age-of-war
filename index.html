@@ -3,83 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>legend-age-of-war</title>
+    <title>Legend Age of War</title>
     <style>
         body {
-            background-color: #111;
+            background-color: #121212;
             color: #fff;
             text-align: center;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: Arial, sans-serif;
             margin: 0;
-            padding: 10px;
+            padding: 5px;
         }
-        h1 { margin: 5px 0; font-size: 22px; color: #ff9800; }
-        .dashboard {
+        h2 { margin: 5px 0; color: #ffb300; font-size: 18px; }
+        
+        /* Üst Ahşap Panel Alanı (Orijinal Oyuna Benzer) */
+        .top-hud {
             display: flex;
-            justify-content: center;
-            gap: 20px;
-            font-size: 15px;
-            background: #222;
-            padding: 8px;
-            border-radius: 5px;
+            justify-content: space-between;
+            align-items: center;
+            background: #8b5a2b;
+            border: 4px solid #5c3a21;
             max-width: 800px;
-            margin: 0 auto 10px auto;
-            border: 1px solid #444;
+            margin: 0 auto;
+            padding: 5px 10px;
+            box-sizing: border-box;
+            border-radius: 4px;
         }
+        .stats-box {
+            background: #d4a373;
+            color: #222;
+            padding: 5px 10px;
+            font-weight: bold;
+            border: 2px solid #5c3a21;
+            font-size: 14px;
+            text-align: left;
+        }
+        .menu-buttons {
+            display: flex;
+            gap: 5px;
+        }
+        .menu-btn {
+            background: #e9edc9;
+            border: 2px solid #5c3a21;
+            padding: 5px 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 12px;
+            color: #333;
+        }
+        .menu-btn:hover { background: #ccd5ae; }
+        .menu-btn:active { background: #fefae0; }
+
+        /* Oyun Tuvali (Gökyüzü ve Zemin) */
         canvas {
-            background: linear-gradient(to bottom, #4a90e2 0%, #a1c4fd 60%, #5b3a29 60%, #3e2723 100%);
-            border: 3px solid #ff9800;
+            background: linear-gradient(to bottom, #4a90e2 0%, #7ab1f7 65%, #4e3629 65%, #2d1f18 100%);
+            border: 4px solid #5c3a21;
             display: block;
-            margin: 0 auto 10px auto;
+            margin: 5px auto;
             max-width: 100%;
-            box-shadow: 0 0 20px rgba(255, 152, 0, 0.3);
+            box-shadow: 0 0 10px rgba(0,0,0,0.8);
         }
-        .panel {
+
+        /* Alt Kontrol Paneli */
+        .control-panel {
+            max-width: 800px;
+            margin: 0 auto;
             display: flex;
             justify-content: center;
             gap: 10px;
-            max-width: 800px;
-            margin: 0 auto;
-            flex-wrap: wrap;
+            background: #2b2b2b;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #444;
         }
-        button {
-            padding: 10px 15px;
-            font-size: 14px;
-            cursor: pointer;
-            background-color: #333;
-            border: 2px solid #555;
+        .action-btn {
+            background: #d90429;
             color: white;
-            border-radius: 5px;
+            border: 2px solid #ef233c;
+            padding: 8px 12px;
             font-weight: bold;
-            transition: 0.2s;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 13px;
         }
-        button:hover { background-color: #555; border-color: #ff9800; }
-        button:active { background-color: #ff9800; }
-        .btn-action { background-color: #c62828; border-color: #e53935; }
-        .btn-action:hover { background-color: #d32f2f; }
-        .btn-upgrade { background-color: #2e7d32; border-color: #43a047; }
-        .btn-upgrade:hover { background-color: #388e3c; }
+        .action-btn:hover { background: #ef233c; }
+        .upgrade-btn {
+            background: #2b9348;
+            color: white;
+            border: 2px solid #55a630;
+            padding: 8px 12px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+        .upgrade-btn:hover { background: #55a630; }
     </style>
 </head>
 <body>
 
-    <h1>Legend Age of War</h1>
-    
-    <div class="dashboard">
-        <div>Altın: <span id="gold" style="color: #ffeb3b; font-weight:bold;">150</span></div>
-        <div>XP: <span id="xp" style="color: #00bcd4; font-weight:bold;">0</span></div>
-        <div>Çağ: <span id="age" style="color: #4caf50; font-weight:bold;">1 (Mağara)</span></div>
-        <div>Üssün Canı: <span id="pBaseHp" style="color: #2196F3; font-weight:bold;">100</span></div>
-        <div>Düşman Canı: <span id="eBaseHp" style="color: #f44336; font-weight:bold;">100</span></div>
+    <h2>Legend Age of War</h2>
+
+    <!-- Üst Kaynak ve Menü Paneli -->
+    <div class="top-hud">
+        <div class="stats-box">
+            Gold: <span id="gold">150</span><br>
+            Exp: <span id="exp">0</span>
+        </div>
+        <div class="menu-buttons">
+            <button class="menu-btn" onclick="spawnUnit(0)">Asker 1 (15G)</button>
+            <button class="menu-btn" onclick="spawnUnit(1)">Asker 2 (30G)</button>
+            <button class="menu-btn" onclick="upgradeAge()" style="background: #ffb703;">Çağ Atla (200XP)</button>
+        </div>
     </div>
-    
+
+    <!-- Oyun Alanı -->
     <canvas id="gameCanvas" width="800" height="400"></canvas>
 
-    <div class="panel">
-        <button onclick="spawnUnit(0)">Asker 1 (Sopalı) - 15G</button>
-        <button onclick="spawnUnit(1)">Asker 2 (Sapanlı) - 30G</button>
-        <button onclick="specialAttack()" class="btn-action">Özel Bomba (50G)</button>
-        <button onclick="upgradeAge()" class="btn-upgrade">ÇAĞ ATLA (200 XP)</button>
+    <!-- Alt Ekstra Kontroller -->
+    <div class="control-panel">
+        <button class="action-btn" onclick="specialAttack()">Özel Bomba (50G)</button>
+        <button class="upgrade-btn" onclick="repairBase()">Kareyi Onar (40G)</button>
     </div>
 
     <script>
@@ -87,140 +130,163 @@
         const ctx = canvas.getContext("2d");
 
         let gold = 150;
-        let xp = 0;
+        let exp = 0;
         let currentAge = 1;
-        let playerBaseHp = 100;
-        let enemyBaseHp = 100;
+        let playerBaseHp = 500;
+        let enemyBaseHp = 500;
 
         let units = [];
         let particles = [];
-
-        // Birim Tipleri (Çağlara göre)
-        const unitTypes = {
-            1: [
-                { name: "Sopalı", cost: 15, hp: 40, attack: 0.6, range: 25, speed: 1.2, color: "#00bcd4", type: 'melee' },
-                { name: "Sapanlı", cost: 30, hp: 25, attack: 0.8, range: 120, speed: 1.0, color: "#8bc34a', type: 'ranged' }" // Düzeltilmiş string
-            ]
-        };
-        // Düzeltme: Ranged birim renk tanımlaması
-        unitTypes[1][1].color = "#8bc34a";
-        unitTypes[1][1].type = "ranged";
-
-        // Düşman Yapay Zekası Zamanlayıcısı
         let enemySpawnTimer = 0;
 
+        // Birim Özellikleri
+        const unitsConfig = {
+            1: [
+                { name: "Sopalı", cost: 15, hp: 50, attack: 0.5, range: 25, speed: 1.2, color: "#e0a96d" },
+                { name: "Sapanlı", cost: 30, hp: 35, attack: 0.7, range: 110, speed: 1.0, color: "#606c38" }
+            ]
+        };
+
+        function updateUI() {
+            document.getElementById("gold").innerText = gold;
+            document.getElementById("exp").innerText = exp;
+        }
+
+        // Oyuncu Asker Üretme
         function spawnUnit(index) {
-            let uData = unitTypes[currentAge][index];
+            let uData = unitsConfig[currentAge][index];
             if (gold >= uData.cost) {
                 gold -= uData.cost;
                 updateUI();
-                
+
                 units.push({
                     x: 90,
-                    y: 330,
+                    y: 335,
                     speed: uData.speed,
                     team: 'player',
                     hp: uData.hp,
                     maxHp: uData.hp,
                     attack: uData.attack,
                     range: uData.range,
-                    color: uData.color,
-                    type: uData.type
+                    color: uData.color
                 });
             }
         }
 
+        // Özel Bomba Yeteneği
         function specialAttack() {
             if (gold >= 50) {
                 gold -= 50;
                 updateUI();
-                // Ekrandaki tüm düşmanlara ağır hasar ver
                 for (let u of units) {
                     if (u.team === 'enemy') {
-                        u.hp -= 50;
+                        u.hp -= 60;
                     }
                 }
-                enemyBaseHp -= 15;
-                // Patlama efekti için parçacıklar ekle
-                for (let i = 0; i < 40; i++) {
+                enemyBaseHp -= 20;
+                // Patlama efekt parçacıkları
+                for (let i = 0; i < 30; i++) {
                     particles.push({
-                        x: Math.random() * 600 + 100,
-                        y: Math.random() * 300 + 50,
-                        vx: (Math.random() - 0.5) * 6,
-                        vy: (Math.random() - 0.5) * 6,
-                        life: 30,
-                        color: "#ff5722"
+                        x: Math.random() * 500 + 150,
+                        y: Math.random() * 250 + 100,
+                        vx: (Math.random() - 0.5) * 8,
+                        vy: (Math.random() - 0.5) * 8,
+                        life: 25,
+                        color: "#fb8500"
                     });
                 }
             }
         }
 
-        function upgradeAge() {
-            if (xp >= 200 && currentAge === 1) {
-                currentAge = 2;
-                xp -= 200;
-                alert("Tebrikler! 2. Çağa (Tunç Çağı) atlattın!");
+        // Üs Onarma
+        function repairBase() {
+            if (gold >= 40 && playerBaseHp < 500) {
+                gold -= 40;
+                playerBaseHp = Math.min(500, playerBaseHp + 50);
                 updateUI();
-            } else if (currentAge < 2) {
-                alert("Çağ atlamak için yeterli XP yok! (Gereken: 200 XP)");
             }
         }
 
-        function updateUI() {
-            document.getElementById("gold").innerText = gold;
-            document.getElementById("xp").innerText = xp;
-            document.getElementById("age").innerText = currentAge === 1 ? "1 (Mağara)" : "2 (Tunç Çağı)";
-            document.getElementById("pBaseHp").innerText = Math.max(0, Math.floor(playerBaseHp));
-            document.getElementById("eBaseHp").innerText = Math.max(0, Math.floor(enemyBaseHp));
+        // Çağ Atlama
+        function upgradeAge() {
+            if (exp >= 200 && currentAge === 1) {
+                currentAge = 2;
+                exp -= 200;
+                alert("Tebrikler! 2. Çağa geçtiniz!");
+                updateUI();
+            } else if (currentAge < 2) {
+                alert("Yeterli XP yok! (Gereken: 200 XP)");
+            }
         }
 
-        // Otomatik Altın ve XP Akışı
+        // Zamanla Altın Artışı
         setInterval(() => {
-            gold += 4;
+            gold += 3;
             updateUI();
         }, 1000);
 
-        // Oyun Döngüsü
+        // Ana Oyun Döngüsü
         function gameLoop() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // --- ÜSLERİ ÇİZ ---
-            // Oyuncu Üssü
-            ctx.fillStyle = "#1976D2";
-            ctx.fillRect(15, 230, 65, 140);
-            ctx.fillStyle = "#fff";
-            ctx.font = "11px sans-serif";
-            ctx.fillText("Üssün", 30, 220);
+            // --- 1. MAĞARALAR VE ÜSLER ---
+            // Oyuncu Mağarası (Sol)
+            ctx.fillStyle = "#3d2817";
+            ctx.beginPath();
+            ctx.arc(60, 310, 50, 0, Math.PI, true);
+            ctx.fill();
+            ctx.fillStyle = "#111";
+            ctx.beginPath();
+            ctx.ellipse(60, 335, 20, 25, 0, 0, Math.PI * 2);
+            ctx.fill();
 
-            // Düşman Üssü
-            ctx.fillStyle = "#D32F2F";
-            ctx.fillRect(720, 230, 65, 140);
-            ctx.fillText("Düşman", 730, 220);
+            // Düşman Mağarası (Sağ)
+            ctx.fillStyle = "#3d2817";
+            ctx.beginPath();
+            ctx.arc(740, 310, 50, 0, Math.PI, true);
+            ctx.fill();
+            ctx.fillStyle = "#111";
+            ctx.beginPath();
+            ctx.ellipse(740, 335, 20, 25, 0, 0, Math.PI * 2);
+            ctx.fill();
 
-            // --- DÜŞMAN ÜRETİMİ ---
+            // --- 2. DİKEY KIRMIZI CAN BARLARI (Üs Canları) ---
+            // Oyuncu Can Barı (Sol)
+            ctx.fillStyle = "#222";
+            ctx.fillRect(20, 150, 10, 180);
+            ctx.fillStyle = "red";
+            let pBarHeight = (playerBaseHp / 500) * 180;
+            ctx.fillRect(20, 150 + (180 - pBarHeight), 10, pBarHeight);
+
+            // Düşman Can Barı (Sağ)
+            ctx.fillStyle = "#222";
+            ctx.fillRect(770, 150, 10, 180);
+            ctx.fillStyle = "red";
+            let eBarHeight = (enemyBaseHp / 500) * 180;
+            ctx.fillRect(770, 150 + (180 - eBarHeight), 10, eBarHeight);
+
+            // --- 3. DÜŞMAN YAPAY ZEKA ÜRETİMİ ---
             enemySpawnTimer++;
-            if (enemySpawnTimer > 180 && enemyBaseHp > 0) { // Yaklaşık 3 saniyede bir
+            if (enemySpawnTimer > 150 && enemyBaseHp > 0) {
                 enemySpawnTimer = 0;
                 units.push({
                     x: 710,
-                    y: 330,
+                    y: 335,
                     speed: -1.2,
                     team: 'enemy',
-                    hp: 40,
-                    maxHp: 40,
-                    attack: 0.6,
+                    hp: 50,
+                    maxHp: 50,
+                    attack: 0.5,
                     range: 25,
-                    color: "#e91e63",
-                    type: 'melee'
+                    color: "#bc6c25"
                 });
             }
 
-            // --- BİRİMLER HAREKET VE SAVAŞ MANTIĞI ---
+            // --- 4. BİRİM HAREKET VE ÇARPIŞMA ---
             for (let i = 0; i < units.length; i++) {
                 let u = units[i];
                 let combat = false;
 
-                // Çarpışma kontrolü (Önünde düşman var mı?)
                 for (let j = 0; j < units.length; j++) {
                     let target = units[j];
                     if (u.team !== target.team) {
@@ -228,7 +294,7 @@
                         if (u.team === 'player' && target.x > u.x && distance <= u.range) {
                             combat = true;
                             target.hp -= u.attack;
-                            if (target.hp <= 0) xp += 10; // Düşman ölünce XP kazan
+                            if (target.hp <= 0) exp += 15;
                         } else if (u.team === 'enemy' && target.x < u.x && distance <= u.range) {
                             combat = true;
                             target.hp -= u.attack;
@@ -236,55 +302,57 @@
                     }
                 }
 
-                // Üsse varma kontrolü
-                if (u.team === 'player' && u.x >= 700) {
-                    enemyBaseHp -= 0.4;
+                // Üslere Hasar Verme
+                if (u.team === 'player' && u.x >= 710) {
+                    enemyBaseHp -= 0.5;
                     combat = true;
-                } else if (u.team === 'enemy' && u.x <= 80) {
-                    playerBaseHp -= 0.4;
+                } else if (u.team === 'enemy' && u.x <= 90) {
+                    playerBaseHp -= 0.5;
                     combat = true;
                 }
 
-                // Savaşmıyorsa yürümeye devam et
                 if (!combat) {
                     u.x += u.speed;
                 }
 
-                // Birimi Çiz
+                // Birimi Çiz (Karakter Temsili)
                 ctx.fillStyle = u.color;
-                ctx.fillRect(u.x, u.y, 18, 35);
-                
-                // Can Barı
-                ctx.fillStyle = "red";
-                ctx.fillRect(u.x - 2, u.y - 8, 22, 4);
+                ctx.fillRect(u.x - 6, u.y - 25, 12, 25);
+                ctx.fillStyle = "#ffb703"; // Baş kısmı
+                ctx.beginPath();
+                ctx.arc(u.x, u.y - 30, 5, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Mini Can Barı
+                ctx.fillStyle = "black";
+                ctx.fillRect(u.x - 10, u.y - 42, 20, 3);
                 ctx.fillStyle = "lime";
-                ctx.fillRect(u.x - 2, u.y - 8, (u.hp / u.maxHp) * 22, 4);
+                ctx.fillRect(u.x - 10, u.y - 42, (u.hp / u.maxHp) * 20, 3);
             }
 
-            // Ölenleri temizle
+            // Ölenleri Temizle
             units = units.filter(u => u.hp > 0);
 
-            // --- PARÇACIKLARI ÇİZ (Efektler) ---
+            // --- 5. EFEKTLER (PARTİKLER) ---
             for (let i = particles.length - 1; i >= 0; i--) {
                 let p = particles[i];
                 p.x += p.vx;
                 p.y += p.vy;
                 p.life--;
                 ctx.fillStyle = p.color;
-                ctx.fillRect(p.x, p.y, 4, 4);
+                ctx.fillRect(p.x, p.y, 5, 5);
                 if (p.life <= 0) particles.splice(i, 1);
             }
 
-            // Oyun Bitiş Kontrolleri
+            // Oyun Bitiş Kontrolü
             if (playerBaseHp <= 0) {
-                alert("Yenildin! Üssün yıkıldı.");
+                alert("Maalesef kaybettiniz! Üssünüz yıkıldı.");
                 location.reload();
             } else if (enemyBaseHp <= 0) {
-                alert("Tebrikler! Düşman üssünü dağıttın ve kazandın!");
+                alert("Tebrikler! Düşman üssünü yok ettiniz ve kazandınız!");
                 location.reload();
             }
 
-            updateUI();
             requestAnimationFrame(gameLoop);
         }
 
