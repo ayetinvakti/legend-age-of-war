@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age of War - Sıfırdan Proje</title>
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: white;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        canvas {
+            background-color: #333;
+            border: 2px solid #555;
+            display: block;
+            margin: 20px auto;
+            max-width: 100%;
+        }
+        .ui {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #ff9800;
+            border: none;
+            color: white;
+            border-radius: 5px;
+        }
+        button:hover { background-color: #e68900; }
+    </style>
+</head>
+<body>
+
+    <h1>Benim Çağlar Boyu Savaşım</h1>
+    <div class="ui">Altın: <span id="gold">100</span> | Skor: <span id="score">0</span></div>
+    
+    <!-- Oyun Alanı -->
+    <canvas id="gameCanvas" width="800" height="400"></canvas>
+
+    <div class="controls">
+        <button onclick="spawnUnit()">Asker Bas (15 Altın)</button>
+    </div>
+
+    <script>
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+
+        let gold = 100;
+        let units = [];
+
+        // Üsleri Çizme Fonksiyonu
+        function drawBases() {
+            // Oyuncu Üssü (Sol)
+            ctx.fillStyle = "#2196F3";
+            ctx.fillRect(20, 250, 60, 120);
+
+            // Düşman Üssü (Sağ)
+            ctx.fillStyle = "#F44336";
+            ctx.fillRect(720, 250, 60, 120);
+        }
+
+        // Asker Basma Fonksiyonu
+        function spawnUnit() {
+            if (gold >= 15) {
+                gold -= 15;
+                document.getElementById("gold").innerText = gold;
+                
+                // Oyuncu birimi ekle (Başlangıç X: 80, Hız: +1)
+                units.push({ x: 90, y: 330, speed: 1, type: 'player', hp: 50 });
+            }
+        }
+
+        // Oyun Döngüsü (Her karede ekranı yeniler)
+        function update() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Zemin çizgisi
+            ctx.strokeStyle = "#777";
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            ctx.moveTo(0, 370);
+            ctx.lineTo(800, 370);
+            ctx.stroke();
+
+            drawBases();
+
+            // Birimleri hareket ettir ve çiz
+            for (let i = 0; i < units.length; i++) {
+                let u = units[i];
+                if (u.type === 'player') {
+                    u.x += u.speed; // Sağa yürür
+                    ctx.fillStyle = "#00bcd4";
+                    ctx.fillRect(u.x, u.y, 20, 40); // Basit çöp adam/kutu temsilcisi
+                }
+            }
+
+            requestAnimationFrame(update);
+        }
+
+        // Zamanla altın kazanma (Her saniye 5 altın)
+        setInterval(() => {
+            gold += 5;
+            document.getElementById("gold").innerText = gold;
+        }, 1000);
+
+        // Oyunu başlat
+        update();
+    </script>
+
+</body>
+</html>
