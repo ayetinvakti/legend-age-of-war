@@ -3,112 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Legend Age of War - HD Ultimate Edition</title>
+    <title>Legend Age of War - Infinite Masterpiece HD</title>
     <style>
+        * { box-sizing: border-box; }
         body {
-            background-color: #050505;
-            color: #f5f5f5;
+            background-color: #020202;
+            color: #ffffff;
             text-align: center;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Courier New', Courier, monospace;
             margin: 0;
             padding: 5px;
             user-select: none;
         }
         
-        /* HD Ahşap Lüks Üst Panel (HUD) */
+        /* Ultra HD Lüks Ahşap Panel (HUD) */
         .game-header {
             width: 800px;
             max-width: 100%;
             margin: 0 auto;
-            background: linear-gradient(to bottom, #5c3a21, #3b2311);
-            border: 4px solid #1a0f07;
-            box-sizing: border-box;
+            background: linear-gradient(135deg, #4a2e12, #271708);
+            border: 4px solid #140b04;
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 8px 12px;
-            border-top-left-radius: 8px;
-            border-top-right-radius: 8px;
-            box-shadow: inset 0 2px 5px rgba(255,255,255,0.2), 0 5px 15px rgba(0,0,0,0.8);
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            box-shadow: inset 0 2px 6px rgba(255,255,255,0.25), 0 8px 25px rgba(0,0,0,0.9);
         }
         .hud-stats {
-            background: linear-gradient(to bottom, #d4a373, #bc8a5f);
-            border: 2px solid #28180b;
+            background: linear-gradient(to bottom, #d4a373, #99683b);
+            border: 2px solid #140b04;
             color: #111;
             padding: 6px 12px;
             font-weight: bold;
-            font-size: 13px;
+            font-size: 12px;
             text-align: left;
             line-height: 1.4;
-            border-radius: 4px;
-            box-shadow: inset 0 1px 3px rgba(255,255,255,0.4);
+            border-radius: 6px;
+            box-shadow: inset 0 1px 3px rgba(255,255,255,0.5);
         }
         .hud-menu {
             display: flex;
             gap: 6px;
-            background: rgba(0,0,0,0.3);
-            padding: 5px;
-            border-radius: 6px;
+            background: rgba(0,0,0,0.4);
+            padding: 6px;
+            border-radius: 8px;
             border: 1px solid rgba(255,255,255,0.1);
         }
         .hud-btn {
-            background: linear-gradient(to bottom, #fefae0, #ccd5ae);
-            border: 2px solid #28180b;
+            background: linear-gradient(to bottom, #fefae0, #b5bc90);
+            border: 2px solid #140b04;
             padding: 6px 10px;
             font-family: inherit;
             font-weight: bold;
             font-size: 11px;
             cursor: pointer;
             color: #111;
-            border-radius: 4px;
+            border-radius: 5px;
             transition: 0.1s;
-            box-shadow: 0 3px 0 #5c3a21;
+            box-shadow: 0 4px 0 #3a220e;
         }
-        .hud-btn:hover { background: #fff; transform: translateY(-1px); }
-        .hud-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 #5c3a21; }
+        .hud-btn:hover { background: #ffffff; transform: translateY(-1px); }
+        .hud-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #3a220e; }
 
-        /* HD Oyun Tuvali ve Gölgelendirme */
+        /* Ultra HD Canvas Alanı */
         canvas {
-            background: linear-gradient(to bottom, #1e3c72 0%, #2a5298 50%, #432818 50%, #1a0f07 100%);
-            border-left: 4px solid #1a0f07;
-            border-right: 4px solid #1a0f07;
+            background: linear-gradient(to bottom, #0f2027 0%, #203a43 50%, #2c5364 50%, #1a1008 100%);
+            border-left: 4px solid #140b04;
+            border-right: 4px solid #140b04;
             display: block;
             margin: 0 auto;
             max-width: 100%;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.9);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.95);
         }
 
-        /* HD Alt Kontrol Paneli */
+        /* Ultra HD Alt Kontrol Paneli */
         .game-footer {
             width: 800px;
             max-width: 100%;
             margin: 0 auto;
-            background: linear-gradient(to bottom, #5c3a21, #3b2311);
-            border: 4px solid #1a0f07;
+            background: linear-gradient(135deg, #4a2e12, #271708);
+            border: 4px solid #140b04;
             border-top: none;
-            box-sizing: border-box;
             display: flex;
             justify-content: space-around;
             padding: 10px;
-            border-bottom-left-radius: 8px;
-            border-bottom-right-radius: 8px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.8);
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.9);
         }
         .footer-btn {
-            background: linear-gradient(to bottom, #d90429, #9b111e);
+            background: linear-gradient(to bottom, #d90429, #7a0215);
             color: white;
-            border: 2px solid #1a0f07;
+            border: 2px solid #140b04;
             padding: 8px 14px;
             font-family: inherit;
             font-weight: bold;
             font-size: 12px;
             cursor: pointer;
-            border-radius: 5px;
-            box-shadow: 0 3px 0 #4a0000;
+            border-radius: 6px;
+            box-shadow: 0 4px 0 #3a0007;
             transition: 0.1s;
         }
-        .footer-btn:hover { filter: brightness(1.2); }
-        .footer-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 #4a0000; }
+        .footer-btn:hover { filter: brightness(1.25); }
+        .footer-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #3a0007; }
     </style>
 </head>
 <body>
@@ -116,9 +115,9 @@
     <!-- Üst HUD -->
     <div class="game-header">
         <div class="hud-stats">
-            Gold: <span id="gold" style="color: #b8860b;">200</span><br>
-            Exp: <span id="exp" style="color: #004d40;">0</span><br>
-            Çağ: <span id="ageText" style="color: #8b0000;">1 - Mağara Çağı</span>
+            Gold: <span id="gold" style="color: #ffd700;">300</span><br>
+            Exp: <span id="exp" style="color: #00ffcc;">0</span><br>
+            Seviye / Çağ: <span id="ageText" style="color: #ff4d4d;">1 (Mağara Başlangıcı)</span>
         </div>
         <div class="hud-menu" id="unitMenu"></div>
     </div>
@@ -128,16 +127,16 @@
 
     <!-- Alt Kontrol Paneli -->
     <div class="game-footer">
-        <button class="footer-btn" onclick="specialAttack()">Özel Bomba (70G)</button>
-        <button class="footer-btn" onclick="repairBase()" style="background: linear-gradient(to bottom, #2b9348, #134e13); box-shadow: 0 3px 0 #0a260a;">Üssü Onar (50G)</button>
-        <button class="footer-btn" onclick="upgradeAge()" style="background: linear-gradient(to bottom, #ffb703, #fb8500); color:#111; box-shadow: 0 3px 0 #9d4edd;">ÇAĞ ATLA</button>
+        <button class="footer-btn" onclick="specialAttack()">Atomik Bomba (80G)</button>
+        <button class="footer-btn" onclick="repairBase()" style="background: linear-gradient(to bottom, #38b000, #134e13); box-shadow: 0 4px 0 #072605;">Üssü Güçlendir (60G)</button>
+        <button class="footer-btn" onclick="upgradeAge()" style="background: linear-gradient(to bottom, #ffb703, #fb8500); color:#111; box-shadow: 0 4px 0 #7b3800;">SÜPER ÇAĞ ATLA</button>
     </div>
 
     <script>
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
 
-        // --- WEB AUDIO API (Harici ses dosyası gerektirmeyen sentetik ses motoru) ---
+        // --- GELİŞMİŞ WEB AUDIO API SES MOTORU ---
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         function playSound(type) {
             if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -145,93 +144,90 @@
             let gain = audioCtx.createGain();
             osc.connect(gain);
             gain.connect(audioCtx.destination);
-            
-            let now = audioCtx.currentTime;
+            let t = audioCtx.currentTime;
+
             if (type === 'coin') {
                 osc.type = 'sine';
-                osc.frequency.setValueAtTime(600, now);
-                osc.frequency.exponentialRampToValueAtTime(1200, now + 0.15);
-                gain.gain.setValueAtTime(0.15, now);
-                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
-                osc.start(now);
-                osc.stop(now + 0.15);
+                osc.frequency.setValueAtTime(800, t);
+                osc.frequency.exponentialRampToValueAtTime(1600, t + 0.12);
+                gain.gain.setValueAtTime(0.2, t);
+                gain.gain.exponentialRampToValueAtTime(0.01, t + 0.12);
+                osc.start(t); osc.stop(t + 0.12);
             } else if (type === 'hit') {
                 osc.type = 'triangle';
-                osc.frequency.setValueAtTime(120, now);
-                osc.frequency.linearRampToValueAtTime(40, now + 0.1);
-                gain.gain.setValueAtTime(0.3, now);
-                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
-                osc.start(now);
-                osc.stop(now + 0.1);
+                osc.frequency.setValueAtTime(150, t);
+                osc.frequency.linearRampToValueAtTime(50, t + 0.08);
+                gain.gain.setValueAtTime(0.35, t);
+                gain.gain.exponentialRampToValueAtTime(0.01, t + 0.08);
+                osc.start(t); osc.stop(t + 0.08);
             } else if (type === 'boom') {
                 osc.type = 'sawtooth';
-                osc.frequency.setValueAtTime(100, now);
-                osc.frequency.exponentialRampToValueAtTime(20, now + 0.4);
-                gain.gain.setValueAtTime(0.5, now);
-                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
-                osc.start(now);
-                osc.stop(now + 0.4);
+                osc.frequency.setValueAtTime(120, t);
+                osc.frequency.exponentialRampToValueAtTime(20, t + 0.5);
+                gain.gain.setValueAtTime(0.6, t);
+                gain.gain.exponentialRampToValueAtTime(0.01, t + 0.5);
+                osc.start(t); osc.stop(t + 0.5);
             }
         }
 
-        let gold = 250;
+        let gold = 300;
         let exp = 0;
         let currentAge = 1;
-        let playerBaseHp = 500;
-        let enemyBaseHp = 500;
+        let playerBaseHp = 600;
+        let enemyBaseHp = 600;
 
         let units = [];
         let particles = [];
         let enemySpawnTimer = 0;
 
-        // 4 Çağlık HD Veritabanı ve Karakter Tasarımları
+        // 1'den 1000'e ölçeklenebilir, sınırsız türetilebilir çağ mimarisi
         const agesData = {
             1: {
-                name: "1 - Mağara Çağı",
-                xpReq: 180,
+                name: "1 - Taş & Mağara Çağı",
+                xpReq: 200,
                 units: [
-                    { name: "Sopalı", cost: 15, hp: 50, attack: 0.6, range: 25, speed: 1.2, color: "#d4a373" },
-                    { name: "Sapanlı", cost: 35, hp: 35, attack: 0.8, range: 120, speed: 1.0, color: "#606c38" }
+                    { name: "Sopalı Neandertal", cost: 15, hp: 60, attack: 0.7, range: 25, speed: 1.2, color: "#d4a373" },
+                    { name: "Sapanlı Avcı", cost: 35, hp: 40, attack: 0.9, range: 125, speed: 1.0, color: "#588157" }
                 ],
                 enemies: [
-                    { hp: 50, attack: 0.6, speed: -1.2, color: "#bc6c25", range: 25 },
-                    { hp: 35, attack: 0.8, speed: -1.0, color: "#858157", range: 120 }
+                    { hp: 60, attack: 0.7, speed: -1.2, color: "#bc6c25", range: 25 },
+                    { hp: 40, attack: 0.9, speed: -1.0, color: "#7f4f24", range: 125 }
                 ]
             },
             2: {
-                name: "2 - Tunç Çağı",
-                xpReq: 400,
+                name: "2 - Tunç & Bronz Çağı",
+                xpReq: 450,
                 units: [
-                    { name: "Kılıçlı", cost: 50, hp: 100, attack: 1.4, range: 28, speed: 1.1, color: "#adb5bd" },
-                    { name: "Okçu", cost: 80, hp: 65, attack: 1.8, range: 135, speed: 0.9, color: "#3a86ff" }
+                    { name: "Bronz Kılıçlı", cost: 50, hp: 120, attack: 1.6, range: 28, speed: 1.1, color: "#adb5bd" },
+                    { name: "Kompozit Okçu", cost: 90, hp: 75, attack: 2.1, range: 140, speed: 0.9, color: "#3a86ff" }
                 ],
                 enemies: [
-                    { hp: 100, attack: 1.4, speed: -1.1, color: "#6c757d", range: 28 },
-                    { hp: 65, attack: 1.8, speed: -0.9, color: "#0077b6", range: 135 }
+                    { hp: 120, attack: 1.6, speed: -1.1, color: "#6c757d", range: 28 },
+                    { hp: 75, attack: 2.1, speed: -0.9, color: "#0077b6", range: 140 }
                 ]
             },
             3: {
-                name: "3 - Demir Çağı",
-                xpReq: 800,
+                name: "3 - Demir & Orta Çağ",
+                xpReq: 900,
                 units: [
-                    { name: "Şövalye", cost: 130, hp: 190, attack: 2.8, range: 30, speed: 1.0, color: "#e9c46a" },
-                    { name: "Arbaletçi", cost: 190, hp: 120, attack: 3.5, range: 145, speed: 0.8, color: "#f4a261" }
+                    { name: "Demir Şövalye", cost: 140, hp: 220, attack: 3.2, range: 30, speed: 1.0, color: "#e9c46a" },
+                    { name: "Ağır Arbaletçi", cost: 200, hp: 130, attack: 4.0, range: 150, speed: 0.8, color: "#f4a261" }
                 ],
                 enemies: [
-                    { hp: 190, attack: 2.8, speed: -1.0, color: "#d4a373", range: 30 },
-                    { hp: 120, attack: 3.5, speed: -0.8, color: "#e76f51", range: 145 }
+                    { hp: 220, attack: 3.2, speed: -1.0, color: "#d4a373", range: 30 },
+                    { hp: 130, attack: 4.0, speed: -0.8, color: "#e76f51", range: 150 }
                 ]
             },
             4: {
-                name: "4 - Gelecek Çağı",
-                xpReq: 99999,
+                name: "4 - Modern & Gelecek Çağı",
+                xpReq: 1800,
                 units: [
-                    { name: "Lazer Bot", cost: 320, hp: 380, attack: 5.5, range: 35, speed: 1.3, color: "#00f5d4" },
-                    { name: "Plazma", cost: 480, hp: 240, attack: 7.5, range: 165, speed: 0.9, color: "#7209b7" }
+                    { name: "Siber Savaşçı", cost: 350, hp: 420, attack: 6.5, range: 35, speed: 1.3, color: "#00f5d4" },
+                    { name: "Plazma Topçusu", cost: 500, hp: 260, attack: 8.5, range: 170, speed: 0.9, color: "#7209b7" }
                 ],
                 enemies: [
-                    { hp: 380, attack: 5.5, speed: -1.3, color: "#4cc9f0", range: 35 },
-                    { hp: 240, attack: 7.5, speed: -0.9, color: "#3f37c9", range: 165 }
+                    { hp: 420, attack: 6.5, speed: -1.3, color: "#4cc9f0", range: 35 },
+                    { hp: 260, attack: 8.5, speed: -0.9, color: "#3f37c9", range: 170 }
                 ]
             }
         };
@@ -239,10 +235,10 @@
         function updateUI() {
             document.getElementById("gold").innerText = Math.floor(gold);
             document.getElementById("exp").innerText = exp;
-            document.getElementById("ageText").innerText = agesData[currentAge].name;
+            document.getElementById("ageText").innerText = agesData[currentAge] ? agesData[currentAge].name : `${currentAge} - Sonsuzluk Çağı`;
             
+            let curUnits = agesData[currentAge] ? agesData[currentAge].units : agesData[4].units;
             let html = "";
-            let curUnits = agesData[currentAge].units;
             for (let i = 0; i < curUnits.length; i++) {
                 html += `<button class="hud-btn" onclick="spawnUnit(${i})">${curUnits[i].name}<br>(${curUnits[i].cost}G)</button>`;
             }
@@ -250,7 +246,8 @@
         }
 
         function spawnUnit(index) {
-            let uData = agesData[currentAge].units[index];
+            let activeUnits = agesData[currentAge] ? agesData[currentAge].units : agesData[4].units;
+            let uData = activeUnits[index];
             if (gold >= uData.cost) {
                 gold -= uData.cost;
                 playSound('coin');
@@ -271,116 +268,114 @@
         }
 
         function upgradeAge() {
-            let req = agesData[currentAge].xpReq;
-            if (exp >= req && currentAge < 4) {
+            let req = agesData[currentAge] ? agesData[currentAge].xpReq : currentAge * 1000;
+            if (exp >= req) {
                 currentAge++;
                 exp = 0;
                 playSound('coin');
-                alert(`Tebrikler! ${agesData[currentAge].name} na yükseldin!`);
+                alert(`Tebrikler Usta! Seviye atladın, yeni çağ açıldı!`);
                 updateUI();
-            } else if (currentAge >= 4) {
-                alert("Zaten son çağdasın usta, zirvedesin!");
             } else {
                 alert(`Çağ atlamak için ${req} XP gerekiyor! (Mevcut: ${exp})`);
             }
         }
 
         function specialAttack() {
-            if (gold >= 70) {
-                gold -= 70;
+            if (gold >= 80) {
+                gold -= 80;
                 playSound('boom');
                 updateUI();
                 for (let u of units) {
-                    if (u.team === 'enemy') u.hp -= 100;
+                    if (u.team === 'enemy') u.hp -= 130;
                 }
-                enemyBaseHp -= 40;
-                for (let i = 0; i < 50; i++) {
+                enemyBaseHp -= 50;
+                for (let i = 0; i < 60; i++) {
                     particles.push({
                         x: Math.random() * 600 + 100,
                         y: Math.random() * 300 + 50,
-                        vx: (Math.random() - 0.5) * 12,
-                        vy: (Math.random() - 0.5) * 12,
-                        life: 35,
-                        color: Math.random() > 0.5 ? "#ff0054" : "#ffb703"
+                        vx: (Math.random() - 0.5) * 14,
+                        vy: (Math.random() - 0.5) * 14,
+                        life: 40,
+                        color: Math.random() > 0.5 ? "#ff0054" : "#00ffcc"
                     });
                 }
             }
         }
 
         function repairBase() {
-            if (gold >= 50 && playerBaseHp < 500) {
-                gold -= 50;
-                playerBaseHp = Math.min(500, playerBaseHp + 80);
+            if (gold >= 60 && playerBaseHp < 600) {
+                gold -= 60;
+                playerBaseHp = Math.min(600, playerBaseHp + 100);
                 playSound('coin');
                 updateUI();
             }
         }
 
         setInterval(() => {
-            gold += 4;
+            gold += 5;
             updateUI();
         }, 1000);
 
         updateUI();
 
-        // Ana HD Oyun Döngüsü
+        // Ultra HD Ana Oyun Döngüsü
         function gameLoop() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // --- HD ÜSLER VE ÇEVRE ---
-            // Oyuncu Üssü (Sol)
-            ctx.fillStyle = currentAge === 4 ? "#00796b" : "#3e2723";
+            // --- ULTRA HD ÜSLER VE ZEMİN ---
+            ctx.fillStyle = currentAge >= 4 ? "#004d40" : "#2b170b";
             ctx.beginPath();
-            ctx.arc(60, 310, 55, 0, Math.PI, true);
+            ctx.arc(60, 310, 58, 0, Math.PI, true);
             ctx.fill();
-            ctx.fillStyle = "#000";
+            ctx.fillStyle = "#020101";
             ctx.beginPath();
-            ctx.ellipse(60, 340, 22, 25, 0, 0, Math.PI * 2);
-            ctx.fill();
-
-            // Düşman Üssü (Sağ)
-            ctx.fillStyle = currentAge === 4 ? "#512da8" : "#3e2723";
-            ctx.beginPath();
-            ctx.arc(740, 310, 55, 0, Math.PI, true);
-            ctx.fill();
-            ctx.fillStyle = "#000";
-            ctx.beginPath();
-            ctx.ellipse(740, 340, 22, 25, 0, 0, Math.PI * 2);
+            ctx.ellipse(60, 340, 24, 26, 0, 0, Math.PI * 2);
             ctx.fill();
 
-            // --- HD DİKEY CAN BARLARI (GLOW EFEKTİ) ---
-            ctx.shadowBlur = 8;
-            ctx.shadowColor = "rgba(255, 0, 0, 0.5)";
-            
-            ctx.fillStyle = "#111";
-            ctx.fillRect(18, 130, 14, 210);
-            ctx.fillStyle = "#ff1744";
-            let pBarH = (playerBaseHp / 500) * 210;
-            ctx.fillRect(18, 130 + (210 - pBarH), 14, pBarH);
+            ctx.fillStyle = currentAge >= 4 ? "#311b92" : "#2b170b";
+            ctx.beginPath();
+            ctx.arc(740, 310, 58, 0, Math.PI, true);
+            ctx.fill();
+            ctx.fillStyle = "#020101";
+            ctx.beginPath();
+            ctx.ellipse(740, 340, 24, 26, 0, 0, Math.PI * 2);
+            ctx.fill();
 
-            ctx.fillStyle = "#111";
-            ctx.fillRect(768, 130, 14, 210);
-            ctx.fillStyle = "#ff1744";
-            let eBarH = (enemyBaseHp / 500) * 210;
-            ctx.fillRect(768, 130 + (210 - eBarH), 14, eBarH);
-            
-            ctx.shadowBlur = 0; // Gölgelendirmeyi sıfırla
+            // --- ULTRA HD DİKEY CAN BARLARI VE GLOW ---
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = "rgba(0, 255, 204, 0.6)";
+
+            ctx.fillStyle = "#0a0a0a";
+            ctx.fillRect(18, 120, 16, 230);
+            ctx.fillStyle = "#06d6a0";
+            let pBarH = (playerBaseHp / 600) * 230;
+            ctx.fillRect(18, 120 + (230 - pBarH), 16, pBarH);
+
+            ctx.fillStyle = "#0a0a0a";
+            ctx.fillRect(766, 120, 16, 230);
+            ctx.fillStyle = "#ef476f";
+            let eBarH = (enemyBaseHp / 600) * 230;
+            ctx.fillRect(766, 120 + (230 - eBarH), 16, eBarH);
+
+            ctx.shadowBlur = 0;
 
             // --- DÜŞMAN YAPAY ZEKA ÜRETİMİ ---
             enemySpawnTimer++;
-            if (enemySpawnTimer > 110 && enemyBaseHp > 0) {
+            let spawnInterval = Math.max(50, 110 - (currentAge * 10));
+            if (enemySpawnTimer > spawnInterval && enemyBaseHp > 0) {
                 enemySpawnTimer = 0;
-                let ePool = agesData[currentAge].enemies;
+                let ePool = agesData[currentAge] ? agesData[currentAge].enemies : agesData[4].enemies;
                 let t = ePool[Math.floor(Math.random() * ePool.length)];
                 
+                let scaleMultiplier = 1 + (currentAge - 1) * 0.15;
                 units.push({
                     x: 705,
                     y: 340,
                     speed: t.speed,
                     team: 'enemy',
-                    hp: t.hp,
-                    maxHp: t.hp,
-                    attack: t.attack,
+                    hp: t.hp * scaleMultiplier,
+                    maxHp: t.hp * scaleMultiplier,
+                    attack: t.attack * scaleMultiplier,
                     range: t.range,
                     color: t.color
                 });
@@ -398,25 +393,25 @@
                         if (u.team === 'player' && target.x > u.x && distance <= u.range) {
                             combat = true;
                             target.hp -= u.attack;
-                            if (Math.random() < 0.2) playSound('hit');
+                            if (Math.random() < 0.25) playSound('hit');
                             if (target.hp <= 0) {
-                                exp += 30;
+                                exp += 35 * currentAge;
                                 playSound('coin');
                             }
                         } else if (u.team === 'enemy' && target.x < u.x && distance <= u.range) {
                             combat = true;
                             target.hp -= u.attack;
-                            if (Math.random() < 0.2) playSound('hit');
+                            if (Math.random() < 0.25) playSound('hit');
                         }
                     }
                 }
 
                 // Üslere Hasar
                 if (u.team === 'player' && u.x >= 710) {
-                    enemyBaseHp -= 0.7;
+                    enemyBaseHp -= 0.8;
                     combat = true;
                 } else if (u.team === 'enemy' && u.x <= 90) {
-                    playerBaseHp -= 0.7;
+                    playerBaseHp -= 0.8;
                     combat = true;
                 }
 
@@ -424,24 +419,24 @@
                     u.x += u.speed;
                 }
 
-                // HD Karakter Çizimi (Gövde + Baş + Zırh Parıltısı)
+                // HD Karakter Çizimi
                 ctx.fillStyle = u.color;
-                ctx.fillRect(u.x - 6, u.y - 28, 12, 28);
-                ctx.fillStyle = "#fffaed";
+                ctx.fillRect(u.x - 6, u.y - 30, 12, 30);
+                ctx.fillStyle = "#ffffff";
                 ctx.beginPath();
-                ctx.arc(u.x, u.y - 33, 5, 0, Math.PI * 2);
+                ctx.arc(u.x, u.y - 35, 5, 0, Math.PI * 2);
                 ctx.fill();
 
-                // HD Can Barı
+                // Can Barı
                 ctx.fillStyle = "#000";
-                ctx.fillRect(u.x - 11, u.y - 43, 22, 4);
-                ctx.fillStyle = "#06d6a0";
-                ctx.fillRect(u.x - 11, u.y - 43, (u.hp / u.maxHp) * 22, 4);
+                ctx.fillRect(u.x - 12, u.y - 45, 24, 4);
+                ctx.fillStyle = u.team === 'player' ? "#00ffcc" : "#ff0054";
+                ctx.fillRect(u.x - 12, u.y - 45, (u.hp / u.maxHp) * 24, 4);
             }
 
             units = units.filter(u => u.hp > 0);
 
-            // Parçacık Efektleri
+            // Parçacık Patlama Efektleri
             for (let i = particles.length - 1; i >= 0; i--) {
                 let p = particles[i];
                 p.x += p.vx;
@@ -454,10 +449,10 @@
 
             // Oyun Bitiş Kontrolleri
             if (playerBaseHp <= 0) {
-                alert("Üssün yıkıldı! Maalesef kaybettin.");
+                alert("Üssün yıkıldı usta! Sağlık olsun, tekrar deneyelim.");
                 location.reload();
             } else if (enemyBaseHp <= 0) {
-                alert("Tebrikler! Bütün çağları geçtin ve düşmanı yok ettin!");
+                alert("Helal olsun! Düşman üssünü tarihe gömdün, zafer senin!");
                 location.reload();
             }
 
