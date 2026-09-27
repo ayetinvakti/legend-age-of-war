@@ -3,100 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Legend Age of War - Ultimate Edition</title>
+    <title>Legend Age of War - HD Ultimate Edition</title>
     <style>
         body {
-            background-color: #0b0b0b;
-            color: #fff;
+            background-color: #050505;
+            color: #f5f5f5;
             text-align: center;
-            font-family: 'Courier New', Courier, monospace;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 5px;
+            user-select: none;
         }
         
-        /* Ahşap Üst Panel (HUD) */
+        /* HD Ahşap Lüks Üst Panel (HUD) */
         .game-header {
             width: 800px;
             max-width: 100%;
             margin: 0 auto;
-            background: #7a4f2b;
-            border: 4px solid #3b2311;
+            background: linear-gradient(to bottom, #5c3a21, #3b2311);
+            border: 4px solid #1a0f07;
             box-sizing: border-box;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 6px 10px;
-            border-top-left-radius: 6px;
-            border-top-right-radius: 6px;
+            padding: 8px 12px;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            box-shadow: inset 0 2px 5px rgba(255,255,255,0.2), 0 5px 15px rgba(0,0,0,0.8);
         }
         .hud-stats {
-            background: #c29b68;
-            border: 2px solid #3b2311;
+            background: linear-gradient(to bottom, #d4a373, #bc8a5f);
+            border: 2px solid #28180b;
             color: #111;
-            padding: 4px 10px;
+            padding: 6px 12px;
             font-weight: bold;
-            font-size: 12px;
+            font-size: 13px;
             text-align: left;
-            line-height: 1.3;
+            line-height: 1.4;
+            border-radius: 4px;
+            box-shadow: inset 0 1px 3px rgba(255,255,255,0.4);
         }
         .hud-menu {
             display: flex;
-            gap: 4px;
-            background: #966f47;
-            padding: 4px;
-            border: 2px solid #3b2311;
+            gap: 6px;
+            background: rgba(0,0,0,0.3);
+            padding: 5px;
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.1);
         }
         .hud-btn {
-            background: #f4f1de;
-            border: 2px solid #3b2311;
-            padding: 4px 8px;
+            background: linear-gradient(to bottom, #fefae0, #ccd5ae);
+            border: 2px solid #28180b;
+            padding: 6px 10px;
             font-family: inherit;
             font-weight: bold;
             font-size: 11px;
             cursor: pointer;
-            color: #222;
+            color: #111;
+            border-radius: 4px;
+            transition: 0.1s;
+            box-shadow: 0 3px 0 #5c3a21;
         }
-        .hud-btn:hover { background: #e0dfd5; }
-        .hud-btn:active { background: #bcb8ad; }
+        .hud-btn:hover { background: #fff; transform: translateY(-1px); }
+        .hud-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 #5c3a21; }
 
-        /* Oyun Tuvali */
+        /* HD Oyun Tuvali ve Gölgelendirme */
         canvas {
-            background: linear-gradient(to bottom, #3a7bd5 0%, #3a6073 60%, #4e3629 60%, #22150e 100%);
-            border-left: 4px solid #3b2311;
-            border-right: 4px solid #3b2311;
+            background: linear-gradient(to bottom, #1e3c72 0%, #2a5298 50%, #432818 50%, #1a0f07 100%);
+            border-left: 4px solid #1a0f07;
+            border-right: 4px solid #1a0f07;
             display: block;
             margin: 0 auto;
             max-width: 100%;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.9);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.9);
         }
 
-        /* Alt Kontrol Paneli */
+        /* HD Alt Kontrol Paneli */
         .game-footer {
             width: 800px;
             max-width: 100%;
             margin: 0 auto;
-            background: #7a4f2b;
-            border: 4px solid #3b2311;
+            background: linear-gradient(to bottom, #5c3a21, #3b2311);
+            border: 4px solid #1a0f07;
             border-top: none;
             box-sizing: border-box;
             display: flex;
             justify-content: space-around;
-            padding: 8px;
-            border-bottom-left-radius: 6px;
-            border-bottom-right-radius: 6px;
+            padding: 10px;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.8);
         }
         .footer-btn {
-            background: #bc4749;
+            background: linear-gradient(to bottom, #d90429, #9b111e);
             color: white;
-            border: 2px solid #281808;
-            padding: 8px 12px;
+            border: 2px solid #1a0f07;
+            padding: 8px 14px;
             font-family: inherit;
             font-weight: bold;
-            font-size: 11px;
+            font-size: 12px;
             cursor: pointer;
-            border-radius: 3px;
+            border-radius: 5px;
+            box-shadow: 0 3px 0 #4a0000;
+            transition: 0.1s;
         }
-        .footer-btn:hover { background: #d9534f; }
+        .footer-btn:hover { filter: brightness(1.2); }
+        .footer-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 #4a0000; }
     </style>
 </head>
 <body>
@@ -104,32 +116,67 @@
     <!-- Üst HUD -->
     <div class="game-header">
         <div class="hud-stats">
-            Gold: <span id="gold">200</span><br>
-            Exp: <span id="exp">0</span><br>
-            Çağ: <span id="ageText">1 - Mağara</span>
+            Gold: <span id="gold" style="color: #b8860b;">200</span><br>
+            Exp: <span id="exp" style="color: #004d40;">0</span><br>
+            Çağ: <span id="ageText" style="color: #8b0000;">1 - Mağara Çağı</span>
         </div>
-        <div class="hud-menu" id="unitMenu">
-            <!-- Dinamik Asker Butonları Buraya Gelecek -->
-        </div>
+        <div class="hud-menu" id="unitMenu"></div>
     </div>
 
     <!-- Oyun Alanı -->
     <canvas id="gameCanvas" width="800" height="400"></canvas>
 
-    <!-- Alt Panel -->
+    <!-- Alt Kontrol Paneli -->
     <div class="game-footer">
-        <button class="footer-btn" onclick="specialAttack()">Özel Bomba (60G)</button>
-        <button class="footer-btn" onclick="repairBase()" style="background: #38b000;">Kareyi Onar (50G)</button>
-        <button class="footer-btn" onclick="upgradeAge()" style="background: #ffb703; color:#111;">ÇAĞ ATLA (Yükselt)</button>
+        <button class="footer-btn" onclick="specialAttack()">Özel Bomba (70G)</button>
+        <button class="footer-btn" onclick="repairBase()" style="background: linear-gradient(to bottom, #2b9348, #134e13); box-shadow: 0 3px 0 #0a260a;">Üssü Onar (50G)</button>
+        <button class="footer-btn" onclick="upgradeAge()" style="background: linear-gradient(to bottom, #ffb703, #fb8500); color:#111; box-shadow: 0 3px 0 #9d4edd;">ÇAĞ ATLA</button>
     </div>
 
     <script>
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
 
-        let gold = 200;
+        // --- WEB AUDIO API (Harici ses dosyası gerektirmeyen sentetik ses motoru) ---
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playSound(type) {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            let osc = audioCtx.createOscillator();
+            let gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            
+            let now = audioCtx.currentTime;
+            if (type === 'coin') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(600, now);
+                osc.frequency.exponentialRampToValueAtTime(1200, now + 0.15);
+                gain.gain.setValueAtTime(0.15, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
+                osc.start(now);
+                osc.stop(now + 0.15);
+            } else if (type === 'hit') {
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(120, now);
+                osc.frequency.linearRampToValueAtTime(40, now + 0.1);
+                gain.gain.setValueAtTime(0.3, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+                osc.start(now);
+                osc.stop(now + 0.1);
+            } else if (type === 'boom') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(100, now);
+                osc.frequency.exponentialRampToValueAtTime(20, now + 0.4);
+                gain.gain.setValueAtTime(0.5, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+                osc.start(now);
+                osc.stop(now + 0.4);
+            }
+        }
+
+        let gold = 250;
         let exp = 0;
-        let currentAge = 1; // 1: Mağara, 2: Tunç, 3: Demir, 4: Gelecek
+        let currentAge = 1;
         let playerBaseHp = 500;
         let enemyBaseHp = 500;
 
@@ -137,54 +184,54 @@
         let particles = [];
         let enemySpawnTimer = 0;
 
-        // Çağlara Göre Birim Veritabanı
+        // 4 Çağlık HD Veritabanı ve Karakter Tasarımları
         const agesData = {
             1: {
                 name: "1 - Mağara Çağı",
-                xpRequired: 150,
+                xpReq: 180,
                 units: [
-                    { name: "Sopalı", cost: 15, hp: 45, attack: 0.5, range: 25, speed: 1.2, color: "#d4a373" },
-                    { name: "Sapanlı", cost: 30, hp: 30, attack: 0.7, range: 110, speed: 1.0, color: "#588157" }
+                    { name: "Sopalı", cost: 15, hp: 50, attack: 0.6, range: 25, speed: 1.2, color: "#d4a373" },
+                    { name: "Sapanlı", cost: 35, hp: 35, attack: 0.8, range: 120, speed: 1.0, color: "#606c38" }
                 ],
-                enemyUnits: [
-                    { hp: 45, attack: 0.5, speed: -1.2, color: "#9a3412", range: 25 },
-                    { hp: 30, attack: 0.7, speed: -1.0, color: "#7f4f24", range: 110 }
+                enemies: [
+                    { hp: 50, attack: 0.6, speed: -1.2, color: "#bc6c25", range: 25 },
+                    { hp: 35, attack: 0.8, speed: -1.0, color: "#858157", range: 120 }
                 ]
             },
             2: {
                 name: "2 - Tunç Çağı",
-                xpRequired: 350,
+                xpReq: 400,
                 units: [
-                    { name: "Kılıçlı", cost: 45, hp: 90, attack: 1.2, range: 28, speed: 1.1, color: "#adb5bd" },
-                    { name: "Okçu", cost: 70, hp: 60, attack: 1.5, range: 130, speed: 0.9, color: "#3a86ff" }
+                    { name: "Kılıçlı", cost: 50, hp: 100, attack: 1.4, range: 28, speed: 1.1, color: "#adb5bd" },
+                    { name: "Okçu", cost: 80, hp: 65, attack: 1.8, range: 135, speed: 0.9, color: "#3a86ff" }
                 ],
-                enemyUnits: [
-                    { hp: 90, attack: 1.2, speed: -1.1, color: "#6c757d", range: 28 },
-                    { hp: 60, attack: 1.5, speed: -0.9, color: "#0077b6", range: 130 }
+                enemies: [
+                    { hp: 100, attack: 1.4, speed: -1.1, color: "#6c757d", range: 28 },
+                    { hp: 65, attack: 1.8, speed: -0.9, color: "#0077b6", range: 135 }
                 ]
             },
             3: {
                 name: "3 - Demir Çağı",
-                xpRequired: 700,
+                xpReq: 800,
                 units: [
-                    { name: "Şövalye", cost: 120, hp: 180, attack: 2.5, range: 30, speed: 1.0, color: "#e9c46a" },
-                    { name: "Arbaletçi", cost: 180, hp: 110, attack: 3.0, range: 140, speed: 0.8, color: "#f4a261" }
+                    { name: "Şövalye", cost: 130, hp: 190, attack: 2.8, range: 30, speed: 1.0, color: "#e9c46a" },
+                    { name: "Arbaletçi", cost: 190, hp: 120, attack: 3.5, range: 145, speed: 0.8, color: "#f4a261" }
                 ],
-                enemyUnits: [
-                    { hp: 180, attack: 2.5, speed: -1.0, color: "#d4a373", range: 30 },
-                    { hp: 110, attack: 3.0, speed: -0.8, color: "#e76f51", range: 140 }
+                enemies: [
+                    { hp: 190, attack: 2.8, speed: -1.0, color: "#d4a373", range: 30 },
+                    { hp: 120, attack: 3.5, speed: -0.8, color: "#e76f51", range: 145 }
                 ]
             },
             4: {
                 name: "4 - Gelecek Çağı",
-                xpRequired: 99999,
+                xpReq: 99999,
                 units: [
-                    { name: "Lazer Asker", cost: 300, hp: 350, attack: 5.0, range: 35, speed: 1.2, color: "#00f5d4" },
-                    { name: "Plazma Topçu", cost: 450, hp: 220, attack: 7.0, range: 160, speed: 0.9, color: "#7209b7" }
+                    { name: "Lazer Bot", cost: 320, hp: 380, attack: 5.5, range: 35, speed: 1.3, color: "#00f5d4" },
+                    { name: "Plazma", cost: 480, hp: 240, attack: 7.5, range: 165, speed: 0.9, color: "#7209b7" }
                 ],
-                enemyUnits: [
-                    { hp: 350, attack: 5.0, speed: -1.2, color: "#4cc9f0", range: 35 },
-                    { hp: 220, attack: 7.0, speed: -0.9, color: "#3f37c9", range: 160 }
+                enemies: [
+                    { hp: 380, attack: 5.5, speed: -1.3, color: "#4cc9f0", range: 35 },
+                    { hp: 240, attack: 7.5, speed: -0.9, color: "#3f37c9", range: 165 }
                 ]
             }
         };
@@ -194,24 +241,24 @@
             document.getElementById("exp").innerText = exp;
             document.getElementById("ageText").innerText = agesData[currentAge].name;
             
-            // Asker Menüsünü Güncelle
-            let menuHtml = "";
-            let currentUnits = agesData[currentAge].units;
-            for (let i = 0; i < currentUnits.length; i++) {
-                menuHtml += `<button class="hud-btn" onclick="spawnUnit(${i})">${currentUnits[i].name}<br>(${currentUnits[i].cost}G)</button>`;
+            let html = "";
+            let curUnits = agesData[currentAge].units;
+            for (let i = 0; i < curUnits.length; i++) {
+                html += `<button class="hud-btn" onclick="spawnUnit(${i})">${curUnits[i].name}<br>(${curUnits[i].cost}G)</button>`;
             }
-            document.getElementById("unitMenu").innerHTML = menuHtml;
+            document.getElementById("unitMenu").innerHTML = html;
         }
 
         function spawnUnit(index) {
             let uData = agesData[currentAge].units[index];
             if (gold >= uData.cost) {
                 gold -= uData.cost;
+                playSound('coin');
                 updateUI();
 
                 units.push({
                     x: 95,
-                    y: 335,
+                    y: 340,
                     speed: uData.speed,
                     team: 'player',
                     hp: uData.hp,
@@ -224,10 +271,11 @@
         }
 
         function upgradeAge() {
-            let req = agesData[currentAge].xpRequired;
+            let req = agesData[currentAge].xpReq;
             if (exp >= req && currentAge < 4) {
                 currentAge++;
                 exp = 0;
+                playSound('coin');
                 alert(`Tebrikler! ${agesData[currentAge].name} na yükseldin!`);
                 updateUI();
             } else if (currentAge >= 4) {
@@ -238,21 +286,22 @@
         }
 
         function specialAttack() {
-            if (gold >= 60) {
-                gold -= 60;
+            if (gold >= 70) {
+                gold -= 70;
+                playSound('boom');
                 updateUI();
                 for (let u of units) {
-                    if (u.team === 'enemy') u.hp -= 90;
+                    if (u.team === 'enemy') u.hp -= 100;
                 }
-                enemyBaseHp -= 35;
-                for (let i = 0; i < 40; i++) {
+                enemyBaseHp -= 40;
+                for (let i = 0; i < 50; i++) {
                     particles.push({
-                        x: Math.random() * 500 + 150,
-                        y: Math.random() * 250 + 100,
-                        vx: (Math.random() - 0.5) * 10,
-                        vy: (Math.random() - 0.5) * 10,
-                        life: 30,
-                        color: "#ff0054"
+                        x: Math.random() * 600 + 100,
+                        y: Math.random() * 300 + 50,
+                        vx: (Math.random() - 0.5) * 12,
+                        vy: (Math.random() - 0.5) * 12,
+                        life: 35,
+                        color: Math.random() > 0.5 ? "#ff0054" : "#ffb703"
                     });
                 }
             }
@@ -261,12 +310,12 @@
         function repairBase() {
             if (gold >= 50 && playerBaseHp < 500) {
                 gold -= 50;
-                playerBaseHp = Math.min(500, playerBaseHp + 75);
+                playerBaseHp = Math.min(500, playerBaseHp + 80);
+                playSound('coin');
                 updateUI();
             }
         }
 
-        // Pasif Altın Akışı
         setInterval(() => {
             gold += 4;
             updateUI();
@@ -274,65 +323,70 @@
 
         updateUI();
 
-        // Ana Oyun Döngüsü
+        // Ana HD Oyun Döngüsü
         function gameLoop() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // --- ÜSLER VE ÇEVRE ---
+            // --- HD ÜSLER VE ÇEVRE ---
             // Oyuncu Üssü (Sol)
-            ctx.fillStyle = currentAge === 4 ? "#009688" : "#2c1d11";
+            ctx.fillStyle = currentAge === 4 ? "#00796b" : "#3e2723";
             ctx.beginPath();
             ctx.arc(60, 310, 55, 0, Math.PI, true);
             ctx.fill();
-            ctx.fillStyle = "#050302";
+            ctx.fillStyle = "#000";
             ctx.beginPath();
-            ctx.ellipse(60, 335, 22, 28, 0, 0, Math.PI * 2);
+            ctx.ellipse(60, 340, 22, 25, 0, 0, Math.PI * 2);
             ctx.fill();
 
             // Düşman Üssü (Sağ)
-            ctx.fillStyle = currentAge === 4 ? "#673ab7" : "#2c1d11";
+            ctx.fillStyle = currentAge === 4 ? "#512da8" : "#3e2723";
             ctx.beginPath();
             ctx.arc(740, 310, 55, 0, Math.PI, true);
             ctx.fill();
-            ctx.fillStyle = "#050302";
+            ctx.fillStyle = "#000";
             ctx.beginPath();
-            ctx.ellipse(740, 335, 22, 28, 0, 0, Math.PI * 2);
+            ctx.ellipse(740, 340, 22, 25, 0, 0, Math.PI * 2);
             ctx.fill();
 
-            // --- DİKEY CAN BARLARI ---
+            // --- HD DİKEY CAN BARLARI (GLOW EFEKTİ) ---
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = "rgba(255, 0, 0, 0.5)";
+            
             ctx.fillStyle = "#111";
-            ctx.fillRect(18, 140, 12, 195);
-            ctx.fillStyle = "#d90429";
-            let pBarH = (playerBaseHp / 500) * 195;
-            ctx.fillRect(18, 140 + (195 - pBarH), 12, pBarH);
+            ctx.fillRect(18, 130, 14, 210);
+            ctx.fillStyle = "#ff1744";
+            let pBarH = (playerBaseHp / 500) * 210;
+            ctx.fillRect(18, 130 + (210 - pBarH), 14, pBarH);
 
             ctx.fillStyle = "#111";
-            ctx.fillRect(770, 140, 12, 195);
-            ctx.fillStyle = "#d90429";
-            let eBarH = (enemyBaseHp / 500) * 195;
-            ctx.fillRect(770, 140 + (195 - eBarH), 12, eBarH);
+            ctx.fillRect(768, 130, 14, 210);
+            ctx.fillStyle = "#ff1744";
+            let eBarH = (enemyBaseHp / 500) * 210;
+            ctx.fillRect(768, 130 + (210 - eBarH), 14, eBarH);
+            
+            ctx.shadowBlur = 0; // Gölgelendirmeyi sıfırla
 
-            // --- DÜŞMAN ÜRETİM YAPAY ZEKASI ---
+            // --- DÜŞMAN YAPAY ZEKA ÜRETİMİ ---
             enemySpawnTimer++;
-            if (enemySpawnTimer > 120 && enemyBaseHp > 0) {
+            if (enemySpawnTimer > 110 && enemyBaseHp > 0) {
                 enemySpawnTimer = 0;
-                let ePool = agesData[currentAge].enemyUnits;
-                let randomTemplate = ePool[Math.floor(Math.random() * ePool.length)];
+                let ePool = agesData[currentAge].enemies;
+                let t = ePool[Math.floor(Math.random() * ePool.length)];
                 
                 units.push({
                     x: 705,
-                    y: 335,
-                    speed: randomTemplate.speed,
+                    y: 340,
+                    speed: t.speed,
                     team: 'enemy',
-                    hp: randomTemplate.hp,
-                    maxHp: randomTemplate.hp,
-                    attack: randomTemplate.attack,
-                    range: randomTemplate.range,
-                    color: randomTemplate.color
+                    hp: t.hp,
+                    maxHp: t.hp,
+                    attack: t.attack,
+                    range: t.range,
+                    color: t.color
                 });
             }
 
-            // --- BİRİM HAREKET VE ÇARPIŞMA ---
+            // --- BİRİM HAREKET, ÇARPIŞMA VE SESLER ---
             for (let i = 0; i < units.length; i++) {
                 let u = units[i];
                 let combat = false;
@@ -344,20 +398,25 @@
                         if (u.team === 'player' && target.x > u.x && distance <= u.range) {
                             combat = true;
                             target.hp -= u.attack;
-                            if (target.hp <= 0) exp += 25; // Düşman ölünce XP
+                            if (Math.random() < 0.2) playSound('hit');
+                            if (target.hp <= 0) {
+                                exp += 30;
+                                playSound('coin');
+                            }
                         } else if (u.team === 'enemy' && target.x < u.x && distance <= u.range) {
                             combat = true;
                             target.hp -= u.attack;
+                            if (Math.random() < 0.2) playSound('hit');
                         }
                     }
                 }
 
                 // Üslere Hasar
                 if (u.team === 'player' && u.x >= 710) {
-                    enemyBaseHp -= 0.6;
+                    enemyBaseHp -= 0.7;
                     combat = true;
                 } else if (u.team === 'enemy' && u.x <= 90) {
-                    playerBaseHp -= 0.6;
+                    playerBaseHp -= 0.7;
                     combat = true;
                 }
 
@@ -365,31 +424,31 @@
                     u.x += u.speed;
                 }
 
-                // Karakter Çizimi
+                // HD Karakter Çizimi (Gövde + Baş + Zırh Parıltısı)
                 ctx.fillStyle = u.color;
-                ctx.fillRect(u.x - 5, u.y - 24, 10, 24);
-                ctx.fillStyle = "#ffffff";
+                ctx.fillRect(u.x - 6, u.y - 28, 12, 28);
+                ctx.fillStyle = "#fffaed";
                 ctx.beginPath();
-                ctx.arc(u.x, u.y - 28, 4, 0, Math.PI * 2);
+                ctx.arc(u.x, u.y - 33, 5, 0, Math.PI * 2);
                 ctx.fill();
 
-                // Can Barı
+                // HD Can Barı
                 ctx.fillStyle = "#000";
-                ctx.fillRect(u.x - 9, u.y - 38, 18, 3);
-                ctx.fillStyle = "#38b000";
-                ctx.fillRect(u.x - 9, u.y - 38, (u.hp / u.maxHp) * 18, 3);
+                ctx.fillRect(u.x - 11, u.y - 43, 22, 4);
+                ctx.fillStyle = "#06d6a0";
+                ctx.fillRect(u.x - 11, u.y - 43, (u.hp / u.maxHp) * 22, 4);
             }
 
             units = units.filter(u => u.hp > 0);
 
-            // Patlama Efektleri
+            // Parçacık Efektleri
             for (let i = particles.length - 1; i >= 0; i--) {
                 let p = particles[i];
                 p.x += p.vx;
                 p.y += p.vy;
                 p.life--;
                 ctx.fillStyle = p.color;
-                ctx.fillRect(p.x, p.y, 4, 4);
+                ctx.fillRect(p.x, p.y, 5, 5);
                 if (p.life <= 0) particles.splice(i, 1);
             }
 
