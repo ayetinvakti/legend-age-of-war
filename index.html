@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Legend Age of War - Ultimate Epic Edition</title>
+    <title>Legend Age of War - Mobile Master Edition</title>
     <style>
         * { box-sizing: border-box; touch-action: manipulation; }
         html, body {
@@ -11,7 +11,7 @@
             height: 100%;
             margin: 0;
             padding: 0;
-            background-color: #000000;
+            background-color: #050505;
             color: #ffffff;
             font-family: 'Courier New', Courier, monospace;
             overflow: hidden;
@@ -19,12 +19,11 @@
             -webkit-user-select: none;
         }
 
-        /* Ekrana Tam Oturan Dinamik Kapsayıcı (Dikey ve Yatay Uyumlu) */
+        /* Ekrana %100 Oturan Esnek Kapsayıcı */
         .game-container {
             width: 100vw;
             height: 100vh;
-            max-width: 850px;
-            max-height: 100vh;
+            max-width: 600px;
             margin: 0 auto;
             display: flex;
             flex-direction: column;
@@ -33,95 +32,93 @@
             padding: 4px;
         }
         
-        /* Ultra HD Lüks Ahşap Üst Panel (HUD) */
+        /* Üst Panel (HUD) */
         .game-header {
             width: 100%;
             background: linear-gradient(135deg, #3d2311, #1a0f07);
-            border: 3px solid #0a0502;
+            border: 2px solid #271408;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 6px 10px;
+            padding: 4px 8px;
             border-radius: 6px;
-            box-shadow: inset 0 2px 5px rgba(255,255,255,0.2), 0 4px 12px rgba(0,0,0,0.8);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.8);
         }
         .hud-stats {
             background: linear-gradient(to bottom, #c29b68, #8c6239);
-            border: 2px solid #0a0502;
+            border: 1px solid #140b04;
             color: #111;
-            padding: 4px 8px;
+            padding: 4px 6px;
             font-weight: bold;
-            font-size: 11px;
+            font-size: 10px;
             text-align: left;
-            line-height: 1.3;
+            line-height: 1.2;
             border-radius: 4px;
-            box-shadow: inset 0 1px 2px rgba(255,255,255,0.4);
         }
         .hud-menu {
             display: flex;
             gap: 4px;
-            background: rgba(0,0,0,0.5);
-            padding: 4px;
-            border-radius: 6px;
-            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(0,0,0,0.4);
+            padding: 3px;
+            border-radius: 5px;
             overflow-x: auto;
+            max-width: 60%;
         }
         .hud-btn {
             background: linear-gradient(to bottom, #fefae0, #a3ac80);
-            border: 2px solid #0a0502;
-            padding: 5px 8px;
+            border: 2px solid #140b04;
+            padding: 4px 6px;
             font-family: inherit;
             font-weight: bold;
-            font-size: 10px;
+            font-size: 9px;
             cursor: pointer;
             color: #111;
             border-radius: 4px;
-            transition: 0.1s;
-            box-shadow: 0 3px 0 #2b180a;
+            box-shadow: 0 2px 0 #2b180a;
             white-space: nowrap;
         }
-        .hud-btn:hover { background: #ffffff; transform: translateY(-1px); }
-        .hud-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 #2b180a; }
+        .hud-btn:active { transform: translateY(2px); box-shadow: none; }
 
-        /* Ultra HD Canvas Alanı (Dikey/Yatay Tam Esnek) */
+        /* Canvas Alanı (Dikey Ekrana Göre Orantılı) */
         canvas {
             width: 100%;
             height: auto;
-            max-height: 68vh;
+            max-height: 58vh;
             aspect-ratio: 2 / 1;
-            background: linear-gradient(to bottom, #050b14 0%, #0d1b2a 45%, #1b263b 50%, #2b170b 50%, #0d0604 100%);
-            border: 3px solid #0a0502;
+            background: linear-gradient(to bottom, #02060d 0%, #0d1b2a 40%, #1b263b 50%, #2b170b 50%, #110704 100%);
+            border: 2px solid #271408;
             display: block;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.9);
-            border-radius: 4px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.9);
+            border-radius: 6px;
         }
 
-        /* Ultra HD Alt Kontrol Paneli */
+        /* Alt Kontrol Paneli (Asla Taşmaz, Ekrana Sığar) */
         .game-footer {
             width: 100%;
             background: linear-gradient(135deg, #3d2311, #1a0f07);
-            border: 3px solid #0a0502;
+            border: 2px solid #271408;
             display: flex;
             justify-content: space-around;
-            padding: 6px;
+            padding: 5px;
             border-radius: 6px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.8);
+            box-shadow: 0 -3px 10px rgba(0,0,0,0.8);
         }
         .footer-btn {
             background: linear-gradient(to bottom, #b7094c, #69022b);
             color: white;
-            border: 2px solid #0a0502;
-            padding: 6px 10px;
+            border: 2px solid #140b04;
+            padding: 6px 8px;
             font-family: inherit;
             font-weight: bold;
-            font-size: 10px;
+            font-size: 9px;
             cursor: pointer;
             border-radius: 4px;
             box-shadow: 0 3px 0 #2b0011;
-            transition: 0.1s;
+            flex: 1;
+            margin: 0 2px;
+            text-align: center;
         }
-        .footer-btn:hover { filter: brightness(1.2); }
-        .footer-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 #2b0011; }
+        .footer-btn:active { transform: translateY(2px); box-shadow: none; }
     </style>
 </head>
 <body>
@@ -152,7 +149,7 @@
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
 
-        // --- Ses Motoru ---
+        // --- Gelişmiş Ses Motoru ---
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         function playSound(type) {
             if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -335,16 +332,16 @@
 
         updateUI();
 
-        // --- Ultra HD Oyun Döngüsü ---
+        // --- Oyun Döngüsü ve Ultra Grafik Motoru ---
         function gameLoop() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Arka Plan Yıldızları / Atmosfer
-            ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
-            ctx.fillRect(150, 40, 2, 2);
-            ctx.fillRect(320, 70, 3, 3);
-            ctx.fillRect(580, 50, 2, 2);
-            ctx.fillRect(700, 90, 3, 3);
+            // Arka Plan Yıldızları
+            ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
+            ctx.fillRect(120, 30, 2, 2);
+            ctx.fillRect(280, 60, 3, 3);
+            ctx.fillRect(520, 40, 2, 2);
+            ctx.fillRect(680, 70, 3, 3);
 
             // Zemin Çizgisi
             ctx.strokeStyle = "#1a0f0a";
@@ -354,7 +351,6 @@
             ctx.lineTo(800, 340);
             ctx.stroke();
 
-            // --- Ultra HD Üsler ve Işıma Efektleri ---
             // Oyuncu Üssü (Sol)
             ctx.fillStyle = currentAge >= 4 ? "#00695c" : "#3d2311";
             ctx.beginPath();
@@ -379,7 +375,7 @@
             ctx.ellipse(740, 340, 22, 26, 0, 0, Math.PI * 2);
             ctx.fill();
 
-            // --- Glow Can Barları ---
+            // Can Barları Glow Efektiyle
             ctx.shadowBlur = 8;
             ctx.shadowColor = "rgba(0, 255, 170, 0.4)";
             ctx.fillStyle = "#0a0a0a";
@@ -396,7 +392,7 @@
             ctx.fillRect(766, 120 + (230 - eBarH), 16, eBarH);
             ctx.shadowBlur = 0;
 
-            // --- Düşman Üretim Yapay Zekası ---
+            // Düşman Üretim Yapay Zekası
             enemySpawnTimer++;
             let spawnInterval = Math.max(50, 110 - (currentAge * 8));
             if (enemySpawnTimer > spawnInterval && enemyBaseHp > 0) {
@@ -419,7 +415,7 @@
                 });
             }
 
-            // --- Birim Hareketi ve Çarpışma ---
+            // Birim Hareket ve Çarpışma
             for (let i = 0; i < units.length; i++) {
                 let u = units[i];
                 let combat = false;
@@ -446,7 +442,6 @@
                     }
                 }
 
-                // Üslere Hasar
                 if (u.team === 'player' && u.x >= 710) {
                     enemyBaseHp -= 0.7;
                     combat = true;
@@ -459,7 +454,7 @@
                     u.x += u.speed;
                 }
 
-                // --- Ultra Gerçekçi Savaşçı Çizimi ---
+                // Savaşçı Çizimi
                 ctx.fillStyle = u.color;
                 ctx.fillRect(u.x - 7, u.y - 32, 14, 32);
                 
@@ -471,7 +466,6 @@
                 ctx.fillStyle = u.team === 'player' ? "#1d3557" : "#450920";
                 ctx.fillRect(u.x - 7, u.y - 45, 14, 4);
 
-                // Silah Efektleri
                 ctx.strokeStyle = "#ffffff";
                 ctx.lineWidth = 2.5;
                 ctx.beginPath();
@@ -487,7 +481,6 @@
                 }
                 ctx.stroke();
 
-                // Can Barı
                 ctx.fillStyle = "#000";
                 ctx.fillRect(u.x - 12, u.y - 53, 24, 4);
                 ctx.fillStyle = u.team === 'player' ? "#00ffcc" : "#ff0054";
@@ -496,7 +489,6 @@
 
             units = units.filter(u => u.hp > 0);
 
-            // Yüzen Altın Yazıları
             for (let i = floatingTexts.length - 1; i >= 0; i--) {
                 let ft = floatingTexts[i];
                 ft.y -= 0.8;
@@ -507,7 +499,6 @@
                 if (ft.life <= 0) floatingTexts.splice(i, 1);
             }
 
-            // Patlama Parçacıkları
             for (let i = particles.length - 1; i >= 0; i--) {
                 let p = particles[i];
                 p.x += p.vx;
@@ -518,7 +509,6 @@
                 if (p.life <= 0) particles.splice(i, 1);
             }
 
-            // Oyun Bitiş
             if (playerBaseHp <= 0) {
                 alert("Üssün yıkıldı usta! Sağlık olsun, tekrar deneyelim.");
                 location.reload();
