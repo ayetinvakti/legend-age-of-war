@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Legend Age of War - Hyper Realistic Cinematic Edition</title>
+    <title>Legend Age of War - Epic Towers & HD Health Bars</title>
     <style>
         * { box-sizing: border-box; touch-action: manipulation; }
         html, body {
@@ -148,7 +148,6 @@
 
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         
-        // Profesyonel ve Tok Sinematik Ses Motoru
         function playSound(type) {
             if (audioCtx.state === 'suspended') audioCtx.resume();
             let t = audioCtx.currentTime;
@@ -158,13 +157,12 @@
                 let gain = audioCtx.createGain();
                 osc.connect(gain); gain.connect(audioCtx.destination);
                 osc.type = 'sine';
-                osc.frequency.setValueAtTime(1046.50, t); // C6
+                osc.frequency.setValueAtTime(1046.50, t);
                 osc.frequency.exponentialRampToValueAtTime(2093.00, t + 0.18);
                 gain.gain.setValueAtTime(0.15, t);
                 gain.gain.exponentialRampToValueAtTime(0.001, t + 0.18);
                 osc.start(t); osc.stop(t + 0.18);
             } else if (type === 'hit') {
-                // Metalik kılıç / darbe sesi (Gürültü + Frekans katmanı)
                 let osc = audioCtx.createOscillator();
                 let gain = audioCtx.createGain();
                 osc.connect(gain); gain.connect(audioCtx.destination);
@@ -175,7 +173,6 @@
                 gain.gain.exponentialRampToValueAtTime(0.001, t + 0.12);
                 osc.start(t); osc.stop(t + 0.12);
             } else if (type === 'laser') {
-                // Gelecek çağ plazma / lazer vınlaması
                 let osc = audioCtx.createOscillator();
                 let gain = audioCtx.createGain();
                 osc.connect(gain); gain.connect(audioCtx.destination);
@@ -186,7 +183,6 @@
                 gain.gain.exponentialRampToValueAtTime(0.001, t + 0.15);
                 osc.start(t); osc.stop(t + 0.15);
             } else if (type === 'boom') {
-                // Derin göğüs titreten atomik patlama
                 let osc = audioCtx.createOscillator();
                 let gain = audioCtx.createGain();
                 osc.connect(gain); gain.connect(audioCtx.destination);
@@ -209,7 +205,7 @@
         let maxEnemyHp = 600;
         let isTransitioning = false;
         let dayNightCycle = 0;
-        let screenShake = 0; // Sarsıntı efekti
+        let screenShake = 0;
 
         let units = [];
         let particles = [];
@@ -255,7 +251,7 @@
                 exp = 0;
                 playSound('coin');
                 screenShake = 15;
-                alert(`Mükemmel Usta! Çağ atladın, ordunun gücü doruğa ulaştı!`);
+                alert(`Harika Usta! Çağ atladın, üslerin ve ordun evrim geçirdi!`);
                 updateUI();
             } else {
                 alert(`Çağ atlamak için ${req} XP gerekiyor! (Mevcut: ${exp})`);
@@ -270,7 +266,6 @@
                 updateUI();
                 for (let u of units) { if (u.team === 'enemy') u.hp -= 120; }
                 enemyBaseHp -= 45;
-                // Yoğun atomik patlama partikülleri
                 for (let i = 0; i < 60; i++) {
                     particles.push({ x: Math.random() * 600 + 100, y: Math.random() * 300 + 50, vx: (Math.random() - 0.5) * 16, vy: (Math.random() - 0.5) * 16, life: 40, color: Math.random() > 0.3 ? "#ff0054" : "#ffbd00" });
                 }
@@ -289,9 +284,59 @@
         setInterval(() => { gold += 6; updateUI(); }, 1000);
         updateUI();
 
+        // Gerçekçi Detaylı Kule Çizim Fonksiyonu
+        function drawRealisticTower(x, y, isEnemy, age) {
+            ctx.save();
+            ctx.translate(x, y);
+
+            // Çağa göre kule mimarisi
+            if (age === 1) {
+                // Mağara Çağı: Taş yığını ve ahşap kütük barınak
+                ctx.fillStyle = isEnemy ? "#8d5b4c" : "#6b4423";
+                ctx.fillRect(-35, -50, 70, 50);
+                ctx.fillStyle = "#4a2e18";
+                ctx.beginPath(); ctx.moveTo(-45, -50); ctx.lineTo(0, -90); ctx.lineTo(45, -50); ctx.fill();
+                // Giriş Mağara Ağzı
+                ctx.fillStyle = "#110804";
+                ctx.beginPath(); ctx.ellipse(0, -15, 12, 18, 0, 0, Math.PI * 2); ctx.fill();
+            } else if (age === 2) {
+                // Tunç Çağı: Taş duvar kale
+                ctx.fillStyle = isEnemy ? "#6c757d" : "#adb5bd";
+                ctx.fillRect(-32, -60, 64, 60);
+                // Siper Dişleri (Mazgallar)
+                ctx.fillRect(-35, -75, 15, 15);
+                ctx.fillRect(-8, -75, 16, 15);
+                ctx.fillRect(20, -75, 15, 15);
+                // Ahşap Kapı
+                ctx.fillStyle = "#2b170b"; ctx.fillRect(-10, -35, 20, 35);
+            } else if (age === 3) {
+                // Demir Çağı: Yüksek görkemli şato kulesi
+                ctx.fillStyle = isEnemy ? "#495057" : "#ced4da";
+                ctx.fillRect(-30, -80, 60, 80);
+                // Koni Çatı
+                ctx.fillStyle = isEnemy ? "#900c3f" : "#1d3557";
+                ctx.beginPath(); ctx.moveTo(-36, -80); ctx.lineTo(0, -120); ctx.lineTo(36, -80); ctx.fill();
+                // Meşale / Bayrak detayı
+                ctx.fillStyle = "#ffb703"; ctx.fillRect(-4, -60, 8, 20);
+            } else {
+                // Gelecek Çağı: Holografik Sci-Fi Üs
+                ctx.fillStyle = "#03045e";
+                ctx.fillRect(-32, -90, 64, 90);
+                // Parlayan Neon Çizgiler ve Enerji Kalkanı Koni
+                ctx.strokeStyle = isEnemy ? "#ff0054" : "#00f5d4";
+                ctx.lineWidth = 2.5;
+                ctx.strokeRect(-26, -80, 52, 75);
+                
+                ctx.fillStyle = isEnemy ? "rgba(255, 0, 84, 0.3)" : "rgba(0, 245, 212, 0.3)";
+                ctx.beginPath(); ctx.moveTo(-40, -90); ctx.lineTo(0, -135); ctx.lineTo(40, -90); ctx.fill();
+                ctx.strokeStyle = isEnemy ? "#ff0054" : "#00f5d4"; ctx.stroke();
+            }
+
+            ctx.restore();
+        }
+
         function gameLoop() {
             ctx.save();
-            // Ekran Sarsıntısı Uygula
             if (screenShake > 0) {
                 let shakeX = (Math.random() - 0.5) * screenShake;
                 let shakeY = (Math.random() - 0.5) * screenShake;
@@ -302,7 +347,7 @@
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Dinamik Gece-Gündüz & Gökyüzü Atmosferi
+            // Dinamik Gece-Gündüz & Gökyüzü
             dayNightCycle += 0.0015;
             let darkFactor = (Math.sin(dayNightCycle) + 1) / 2;
             
@@ -312,7 +357,7 @@
             ctx.fillStyle = skyGrad;
             ctx.fillRect(0, 0, 800, 200);
 
-            // Parıldayan Yıldızlar
+            // Yıldızlar
             ctx.fillStyle = `rgba(255, 255, 255, ${0.3 + 0.7 * darkFactor})`;
             ctx.fillRect(120, 25, 2, 2);
             ctx.fillRect(280, 55, 3, 3);
@@ -320,7 +365,7 @@
             ctx.fillRect(620, 70, 2, 2);
             ctx.fillRect(750, 40, 3, 3);
 
-            // Ultra HD Zemin
+            // Zemin
             let groundGrad = ctx.createLinearGradient(0, 200, 0, 400);
             groundGrad.addColorStop(0, '#0f172a');
             groundGrad.addColorStop(0.5, '#1e1108');
@@ -335,23 +380,26 @@
             ctx.lineTo(800, 340);
             ctx.stroke();
 
-            // Sol Kale (HD Detaylı)
-            ctx.fillStyle = currentAge >= 4 ? "#00796b" : "#2d180c";
-            ctx.beginPath(); ctx.arc(60, 310, 58, 0, Math.PI, true); ctx.fill();
-            ctx.lineWidth = 3; ctx.strokeStyle = "#1a0f07"; ctx.stroke();
-            ctx.fillStyle = "#030201"; ctx.beginPath(); ctx.ellipse(60, 340, 22, 26, 0, 0, Math.PI * 2); ctx.fill();
+            // GERÇEKÇİ KULELERİ ÇİZ
+            drawRealisticTower(65, 340, false, currentAge);
+            drawRealisticTower(735, 340, true, currentAge);
 
-            // Sağ Kale (HD Detaylı)
-            ctx.fillStyle = currentAge >= 4 ? "#512da8" : "#2d180c";
-            ctx.beginPath(); ctx.arc(740, 310, 58, 0, Math.PI, true); ctx.fill(); ctx.stroke();
-            ctx.fillStyle = "#030201"; ctx.beginPath(); ctx.ellipse(740, 340, 22, 26, 0, 0, Math.PI * 2); ctx.fill();
+            // PRO ÇERÇEVELİ CAN BARLARI (Dikey Yan Göstergeler)
+            // Oyuncu Can Barı Çerçevesi
+            ctx.fillStyle = "#111"; ctx.fillRect(16, 118, 20, 234);
+            ctx.strokeStyle = "#d4af37"; ctx.lineWidth = 2; ctx.strokeRect(16, 118, 20, 234);
+            let pBarH = (playerBaseHp / maxPlayerHp) * 230;
+            let pBarGrad = ctx.createLinearGradient(18, 350 - pBarH, 18, 350);
+            pBarGrad.addColorStop(0, '#00f5d4'); pBarGrad.addColorStop(1, '#023e8a');
+            ctx.fillStyle = pBarGrad; ctx.fillRect(18, 120 + (230 - pBarH), 16, pBarH);
 
-            // Can Barları
-            ctx.fillStyle = "#050505"; ctx.fillRect(18, 120, 16, 230);
-            ctx.fillStyle = "#00f5d4"; let pBarH = (playerBaseHp / maxPlayerHp) * 230; ctx.fillRect(18, 120 + (230 - pBarH), 16, pBarH);
-
-            ctx.fillStyle = "#050505"; ctx.fillRect(766, 120, 16, 230);
-            ctx.fillStyle = "#ff0054"; let eBarH = (enemyBaseHp / maxEnemyHp) * 230; ctx.fillRect(766, 120 + (230 - eBarH), 16, eBarH);
+            // Düşman Can Barı Çerçevesi
+            ctx.fillStyle = "#111"; ctx.fillRect(764, 118, 20, 234);
+            ctx.strokeStyle = "#d4af37"; ctx.lineWidth = 2; ctx.strokeRect(764, 118, 20, 234);
+            let eBarH = (enemyBaseHp / maxEnemyHp) * 230;
+            let eBarGrad = ctx.createLinearGradient(766, 350 - eBarH, 766, 350);
+            eBarGrad.addColorStop(0, '#ff0054'); eBarGrad.addColorStop(1, '#590d22');
+            ctx.fillStyle = eBarGrad; ctx.fillRect(766, 120 + (230 - eBarH), 16, eBarH);
 
             enemySpawnTimer++;
             let spawnInterval = Math.max(45, 105 - (currentAge * 6) - (levelRound * 3));
@@ -360,7 +408,7 @@
                 let ePool = agesData[currentAge] ? agesData[currentAge].enemies : agesData[4].enemies;
                 let t = ePool[Math.floor(Math.random() * ePool.length)];
                 let diffMultiplier = 1 + (currentAge - 1) * 0.15 + (levelRound - 1) * 0.2;
-                units.push({ x: 705, y: 340, speed: t.speed - (levelRound * 0.03), team: 'enemy', hp: t.hp * diffMultiplier, maxHp: t.hp * diffMultiplier, attack: t.attack * diffMultiplier, range: t.range, color: t.color, weapon: t.weapon });
+                units.push({ x: 700, y: 340, speed: t.speed - (levelRound * 0.03), team: 'enemy', hp: t.hp * diffMultiplier, maxHp: t.hp * diffMultiplier, attack: t.attack * diffMultiplier, range: t.range, color: t.color, weapon: t.weapon });
             }
 
             for (let i = 0; i < units.length; i++) {
@@ -376,16 +424,14 @@
                             if (Math.random() < 0.4) {
                                 if (u.weapon === 'laser') playSound('laser');
                                 else playSound('hit');
-                                // Çarpışma anında kıvılcım partikülü fırlat
                                 particles.push({ x: (u.x + target.x) / 2, y: u.y - 25, vx: (Math.random() - 0.5) * 6, vy: (Math.random() - 0.5) * 6, life: 12, color: "#ffbd00" });
                             }
                             if (target.hp <= 0) { 
                                 exp += 25 * currentAge; 
                                 gold += 12; 
-                                screenShake = 4; // Ölüm anında hafif sarsıntı
+                                screenShake = 4; 
                                 floatingTexts.push({ x: target.x, y: target.y - 40, text: "+12G", life: 30, color: "#ffbd00" }); 
                                 playSound('coin'); 
-                                // Ölüm patlama parçacıkları
                                 for(let k=0; k<8; k++) {
                                     particles.push({ x: target.x, y: target.y - 20, vx: (Math.random() - 0.5) * 8, vy: (Math.random() - 0.5) * 8, life: 20, color: target.color });
                                 }
@@ -400,12 +446,12 @@
                     }
                 }
 
-                if (u.team === 'player' && u.x >= 710) { enemyBaseHp -= 0.8; combat = true; }
-                else if (u.team === 'enemy' && u.x <= 90) { playerBaseHp -= 0.8; combat = true; }
+                if (u.team === 'player' && u.x >= 705) { enemyBaseHp -= 0.8; combat = true; }
+                else if (u.team === 'enemy' && u.x <= 95) { playerBaseHp -= 0.8; combat = true; }
 
                 if (!combat) u.x += u.speed;
 
-                // Ünite Gövdesi ve Silah Çizimi
+                // Ünite Çizimi
                 ctx.fillStyle = u.color; ctx.fillRect(u.x - 7, u.y - 32, 14, 32);
                 ctx.fillStyle = "#fff5db"; ctx.beginPath(); ctx.arc(u.x, u.y - 38, 6, 0, Math.PI * 2); ctx.fill();
                 ctx.fillStyle = u.team === 'player' ? "#0f172a" : "#3b0714"; ctx.fillRect(u.x - 7, u.y - 45, 14, 4);
@@ -418,7 +464,7 @@
                 }
                 ctx.stroke();
 
-                // Ünite Can Barı
+                // Ünite Can Barı Çerçeveli
                 ctx.fillStyle = "#000"; ctx.fillRect(u.x - 12, u.y - 53, 24, 4);
                 ctx.fillStyle = u.team === 'player' ? "#00f5d4" : "#ff0054"; ctx.fillRect(u.x - 12, u.y - 53, (u.hp / u.maxHp) * 24, 4);
             }
@@ -446,12 +492,12 @@
                 units = [];
                 playSound('boom');
                 screenShake = 30;
-                alert(`Helal Usta! Düşman üssünü yerle bir ettin! Tur ${levelRound} başlıyor (+200 Altın kazandın)!`);
+                alert(`Helal Usta! Düşman üssünü paramparça ettin! Tur ${levelRound} başlıyor (+200 Altın kazandın)!`);
                 setTimeout(() => { isTransitioning = false; }, 1000);
             }
 
             if (playerBaseHp <= 0) {
-                alert("Üssün yıkıldı usta! Sağlık olsun, yeni turda daha güçlü dönersin.");
+                alert("Üssün yıkıldı usta! Sağlık olsun, yeni turda intikamını alırsın.");
                 location.reload();
             }
 
