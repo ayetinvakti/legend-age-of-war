@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Legend Age of War - Endless Mobile Edition</title>
+    <title>Legend Age of War - Bugfree Edition</title>
     <style>
         * { box-sizing: border-box; touch-action: manipulation; }
         html, body {
@@ -19,7 +19,6 @@
             -webkit-user-select: none;
         }
 
-        /* Mobil Tarayıcılar İçin Kesin Çözüm: Esnek ve Sıkıştırılmış Kapsayıcı */
         .game-container {
             width: 100%;
             height: 100%;
@@ -32,7 +31,6 @@
             padding: 2px;
         }
         
-        /* Üst Panel (HUD) */
         .game-header {
             width: 100%;
             background: linear-gradient(135deg, #3d2311, #1a0f07);
@@ -50,9 +48,9 @@
             color: #111;
             padding: 3px 5px;
             font-weight: bold;
-            font-size: 9px;
+            font-size: 8.5px;
             text-align: left;
-            line-height: 1.1;
+            line-height: 1.15;
             border-radius: 3px;
         }
         .hud-menu {
@@ -62,7 +60,7 @@
             padding: 2px;
             border-radius: 4px;
             overflow-x: auto;
-            max-width: 58%;
+            max-width: 56%;
         }
         .hud-btn {
             background: linear-gradient(to bottom, #fefae0, #a3ac80);
@@ -79,7 +77,6 @@
         }
         .hud-btn:active { transform: translateY(1px); box-shadow: none; }
 
-        /* Canvas Alanı (Dikey Ekranda Asla Taşmaz) */
         canvas {
             width: 100%;
             height: auto;
@@ -92,7 +89,6 @@
             flex-shrink: 1;
         }
 
-        /* Alt Kontrol Paneli (Garantili Görünürlük) */
         .game-footer {
             width: 100%;
             background: linear-gradient(135deg, #3d2311, #1a0f07);
@@ -125,20 +121,16 @@
 <body>
 
     <div class="game-container">
-        <!-- Üst HUD -->
         <div class="game-header">
             <div class="hud-stats">
-                Gold: <span id="gold" style="color: #ffaa00;">350</span><br>
-                Exp: <span id="exp" style="color: #00ffaa;">0</span><br>
+                Gold: <span id="gold" style="color: #ffaa00;">350</span> | Exp: <span id="exp" style="color: #00ffaa;">0</span><br>
                 Çağ: <span id="ageText" style="color: #ff3333;">1 - Mağara</span>
             </div>
             <div class="hud-menu" id="unitMenu"></div>
         </div>
 
-        <!-- Oyun Alanı -->
         <canvas id="gameCanvas" width="800" height="400"></canvas>
 
-        <!-- Alt Kontrol Paneli -->
         <div class="game-footer">
             <button class="footer-btn" onclick="specialAttack()">Atomik Bomba (70G)</button>
             <button class="footer-btn" onclick="repairBase()" style="background: linear-gradient(to bottom, #007200, #003600);">Üssü Onar (50G)</button>
@@ -150,7 +142,6 @@
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
 
-        // Ses Motoru
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         function playSound(type) {
             if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -189,7 +180,10 @@
         let currentAge = 1;
         let levelRound = 1;
         let playerBaseHp = 600;
+        let maxPlayerHp = 600;
         let enemyBaseHp = 600;
+        let maxEnemyHp = 600;
+        let isTransitioning = false;
 
         let units = [];
         let particles = [];
@@ -197,17 +191,17 @@
         let enemySpawnTimer = 0;
 
         const agesData = {
-            1: { name: "1 - Mağara Çağı", xpReq: 150, units: [{ name: "Sopalı", cost: 12, hp: 55, attack: 0.8, range: 25, speed: 1.2, color: "#d4a373", weapon: "club" }, { name: "Sapanlı", cost: 28, hp: 35, attack: 1.0, range: 130, speed: 1.0, color: "#588157", weapon: "sling" }], enemies: [{ hp: 55, attack: 0.8, speed: -1.2, color: "#bc6c25", range: 25, weapon: "club" }, { hp: 35, attack: 1.0, speed: -1.0, color: "#7f4f24", range: 130, weapon: "sling" }] },
-            2: { name: "2 - Tunç Çağı", xpReq: 350, units: [{ name: "Kılıçlı", cost: 45, hp: 110, attack: 1.8, range: 28, speed: 1.1, color: "#adb5bd", weapon: "sword" }, { name: "Okçu", cost: 75, hp: 70, attack: 2.3, range: 145, speed: 0.9, color: "#3a86ff", weapon: "bow" }], enemies: [{ hp: 110, attack: 1.8, speed: -1.1, color: "#6c757d", range: 28, weapon: "sword" }, { hp: 70, attack: 2.3, speed: -0.9, color: "#0077b6", range: 145, weapon: "bow" }] },
-            3: { name: "3 - Demir Çağı", xpReq: 750, units: [{ name: "Şövalye", cost: 120, hp: 200, attack: 3.5, range: 30, speed: 1.0, color: "#e9c46a", weapon: "shield" }, { name: "Arbaletçi", cost: 170, hp: 120, attack: 4.2, range: 160, speed: 0.8, color: "#f4a261", weapon: "crossbow" }], enemies: [{ hp: 200, attack: 3.5, speed: -1.0, color: "#d4a373", range: 30, weapon: "shield" }, { hp: 120, attack: 4.2, speed: -0.8, color: "#e76f51", range: 160, weapon: "crossbow" }] },
-            4: { name: "4 - Gelecek Çağı", xpReq: 1500, units: [{ name: "Siber Bot", cost: 280, hp: 380, attack: 6.5, range: 35, speed: 1.3, color: "#00f5d4", weapon: "laser" }, { name: "Plazma", cost: 420, hp: 230, attack: 8.5, range: 180, speed: 0.9, color: "#7209b7", weapon: "plasma" }], enemies: [{ hp: 380, attack: 6.5, speed: -1.3, color: "#4cc9f0", range: 35, weapon: "laser" }, { hp: 230, attack: 8.5, speed: -0.9, color: "#3f37c9", range: 180, weapon: "plasma" }] }
+            1: { name: "1 - Mağara", xpReq: 150, units: [{ name: "Sopalı", cost: 12, hp: 55, attack: 0.8, range: 25, speed: 1.2, color: "#d4a373", weapon: "club" }, { name: "Sapanlı", cost: 28, hp: 35, attack: 1.0, range: 130, speed: 1.0, color: "#588157", weapon: "sling" }], enemies: [{ hp: 55, attack: 0.8, speed: -1.2, color: "#bc6c25", range: 25, weapon: "club" }, { hp: 35, attack: 1.0, speed: -1.0, color: "#7f4f24", range: 130, weapon: "sling" }] },
+            2: { name: "2 - Tunç", xpReq: 350, units: [{ name: "Kılıçlı", cost: 45, hp: 110, attack: 1.8, range: 28, speed: 1.1, color: "#adb5bd", weapon: "sword" }, { name: "Okçu", cost: 75, hp: 70, attack: 2.3, range: 145, speed: 0.9, color: "#3a86ff", weapon: "bow" }], enemies: [{ hp: 110, attack: 1.8, speed: -1.1, color: "#6c757d", range: 28, weapon: "sword" }, { hp: 70, attack: 2.3, speed: -0.9, color: "#0077b6", range: 145, weapon: "bow" }] },
+            3: { name: "3 - Demir", xpReq: 750, units: [{ name: "Şövalye", cost: 120, hp: 200, attack: 3.5, range: 30, speed: 1.0, color: "#e9c46a", weapon: "shield" }, { name: "Arbaletçi", cost: 170, hp: 120, attack: 4.2, range: 160, speed: 0.8, color: "#f4a261", weapon: "crossbow" }], enemies: [{ hp: 200, attack: 3.5, speed: -1.0, color: "#d4a373", range: 30, weapon: "shield" }, { hp: 120, attack: 4.2, speed: -0.8, color: "#e76f51", range: 160, weapon: "crossbow" }] },
+            4: { name: "4 - Gelecek", xpReq: 1500, units: [{ name: "Siber", cost: 280, hp: 380, attack: 6.5, range: 35, speed: 1.3, color: "#00f5d4", weapon: "laser" }, { name: "Plazma", cost: 420, hp: 230, attack: 8.5, range: 180, speed: 0.9, color: "#7209b7", weapon: "plasma" }], enemies: [{ hp: 380, attack: 6.5, speed: -1.3, color: "#4cc9f0", range: 35, weapon: "laser" }, { hp: 230, attack: 8.5, speed: -0.9, color: "#3f37c9", range: 180, weapon: "plasma" }] }
         };
 
         function updateUI() {
             document.getElementById("gold").innerText = Math.floor(gold);
             document.getElementById("exp").innerText = exp;
-            let ageInfo = agesData[currentAge] ? agesData[currentAge].name : `${currentAge} - Sonsuzluk`;
-            document.getElementById("ageText").innerText = `${ageInfo} (Tur ${levelRound})`;
+            let ageName = agesData[currentAge] ? agesData[currentAge].name : `${currentAge}-Sonsuz`;
+            document.getElementById("ageText").innerText = `${ageName} (Tur ${levelRound})`;
             
             let curUnits = agesData[currentAge] ? agesData[currentAge].units : agesData[4].units;
             let html = "";
@@ -255,9 +249,9 @@
         }
 
         function repairBase() {
-            if (gold >= 50 && playerBaseHp < 600) {
+            if (gold >= 50 && playerBaseHp < maxPlayerHp) {
                 gold -= 50;
-                playerBaseHp = Math.min(600, playerBaseHp + 90);
+                playerBaseHp = Math.min(maxPlayerHp, playerBaseHp + 90);
                 playSound('coin');
                 updateUI();
             }
@@ -266,17 +260,14 @@
         setInterval(() => { gold += 6; updateUI(); }, 1000);
         updateUI();
 
-        // Oyun Döngüsü
         function gameLoop() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Yıldızlar
             ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
             ctx.fillRect(150, 30, 2, 2);
             ctx.fillRect(350, 60, 3, 3);
             ctx.fillRect(600, 40, 2, 2);
 
-            // Zemin
             ctx.strokeStyle = "#1a0f0a";
             ctx.lineWidth = 4;
             ctx.beginPath();
@@ -284,7 +275,6 @@
             ctx.lineTo(800, 340);
             ctx.stroke();
 
-            // Üsler
             ctx.fillStyle = currentAge >= 4 ? "#00695c" : "#3d2311";
             ctx.beginPath(); ctx.arc(60, 310, 58, 0, Math.PI, true); ctx.fill();
             ctx.lineWidth = 3; ctx.strokeStyle = "#1a0f07"; ctx.stroke();
@@ -294,25 +284,22 @@
             ctx.beginPath(); ctx.arc(740, 310, 58, 0, Math.PI, true); ctx.fill(); ctx.stroke();
             ctx.fillStyle = "#050302"; ctx.beginPath(); ctx.ellipse(740, 340, 22, 26, 0, 0, Math.PI * 2); ctx.fill();
 
-            // Can Barları
             ctx.fillStyle = "#0a0a0a"; ctx.fillRect(18, 120, 16, 230);
-            ctx.fillStyle = "#06d6a0"; let pBarH = (playerBaseHp / 600) * 230; ctx.fillRect(18, 120 + (230 - pBarH), 16, pBarH);
+            ctx.fillStyle = "#06d6a0"; let pBarH = (playerBaseHp / maxPlayerHp) * 230; ctx.fillRect(18, 120 + (230 - pBarH), 16, pBarH);
 
             ctx.fillStyle = "#0a0a0a"; ctx.fillRect(766, 120, 16, 230);
-            ctx.fillStyle = "#ef476f"; let eBarH = (enemyBaseHp / 600) * 230; ctx.fillRect(766, 120 + (230 - eBarH), 16, eBarH);
+            ctx.fillStyle = "#ef476f"; let eBarH = (enemyBaseHp / maxEnemyHp) * 230; ctx.fillRect(766, 120 + (230 - eBarH), 16, eBarH);
 
-            // Düşman Üretimi
             enemySpawnTimer++;
             let spawnInterval = Math.max(45, 105 - (currentAge * 6) - (levelRound * 3));
-            if (enemySpawnTimer > spawnInterval && enemyBaseHp > 0) {
+            if (enemySpawnTimer > spawnInterval && enemyBaseHp > 0 && !isTransitioning) {
                 enemySpawnTimer = 0;
                 let ePool = agesData[currentAge] ? agesData[currentAge].enemies : agesData[4].enemies;
                 let t = ePool[Math.floor(Math.random() * ePool.length)];
                 let diffMultiplier = 1 + (currentAge - 1) * 0.15 + (levelRound - 1) * 0.2;
-                units.push({ x: 705, y: 340, speed: t.speed - (levelRound * 0.05), team: 'enemy', hp: t.hp * diffMultiplier, maxHp: t.hp * diffMultiplier, attack: t.attack * diffMultiplier, range: t.range, color: t.color, weapon: t.weapon });
+                units.push({ x: 705, y: 340, speed: t.speed - (levelRound * 0.03), team: 'enemy', hp: t.hp * diffMultiplier, maxHp: t.hp * diffMultiplier, attack: t.attack * diffMultiplier, range: t.range, color: t.color, weapon: t.weapon });
             }
 
-            // Birimler
             for (let i = 0; i < units.length; i++) {
                 let u = units[i];
                 let combat = false;
@@ -367,13 +354,17 @@
                 if (p.life <= 0) particles.splice(i, 1);
             }
 
-            // KALE YIKILINCA OYUN BİTMİYOR -> SONRAKİ TURA/SEVİYEYE GEÇİYORUZ
-            if (enemyBaseHp <= 0) {
+            // GÜVENLİ TUR / BÖLÜM GEÇİŞİ (BUGFREE)
+            if (enemyBaseHp <= 0 && !isTransitioning) {
+                isTransitioning = true;
                 levelRound++;
-                enemyBaseHp = 600 + (levelRound * 150);
+                maxEnemyHp = 600 + (levelRound * 150);
+                enemyBaseHp = maxEnemyHp;
                 gold += 200;
+                units = []; // Savaş alanını temizle
                 playSound('boom');
-                alert(`Helal Usta! Düşman kalesini yerle bir ettin! Tur ${levelRound} başlıyor, düşman güçlendi ama ekstra altın kazandın!`);
+                alert(`Helal Usta! Düşman kalesini yıktın! Tur ${levelRound} başlıyor (+200 Altın kazandın)!`);
+                setTimeout(() => { isTransitioning = false; }, 1000);
             }
 
             if (playerBaseHp <= 0) {
