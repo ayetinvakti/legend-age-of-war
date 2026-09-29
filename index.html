@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Legend Age of War - Bugfree Edition</title>
+    <title>Legend Age of War - Ultra HD & Dynamic Day-Night Edition</title>
     <style>
         * { box-sizing: border-box; touch-action: manipulation; }
         html, body {
@@ -11,7 +11,7 @@
             height: 100%;
             margin: 0;
             padding: 0;
-            background-color: #030303;
+            background-color: #020202;
             color: #ffffff;
             font-family: 'Courier New', Courier, monospace;
             overflow: hidden;
@@ -33,46 +33,48 @@
         
         .game-header {
             width: 100%;
-            background: linear-gradient(135deg, #3d2311, #1a0f07);
-            border: 2px solid #271408;
+            background: linear-gradient(135deg, #2b170b, #110904);
+            border: 2px solid #4a2810;
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 3px 6px;
             border-radius: 4px;
             flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.6);
         }
         .hud-stats {
-            background: linear-gradient(to bottom, #c29b68, #8c6239);
-            border: 1px solid #140b04;
+            background: linear-gradient(to bottom, #d4af37, #997a15);
+            border: 1px solid #1a1002;
             color: #111;
-            padding: 3px 5px;
+            padding: 3px 6px;
             font-weight: bold;
             font-size: 8.5px;
             text-align: left;
-            line-height: 1.15;
+            line-height: 1.2;
             border-radius: 3px;
+            text-shadow: 0 1px 0 rgba(255,255,255,0.4);
         }
         .hud-menu {
             display: flex;
             gap: 3px;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.6);
             padding: 2px;
             border-radius: 4px;
             overflow-x: auto;
             max-width: 56%;
         }
         .hud-btn {
-            background: linear-gradient(to bottom, #fefae0, #a3ac80);
-            border: 1.5px solid #140b04;
-            padding: 3px 5px;
+            background: linear-gradient(to bottom, #f8f9fa, #ced4da);
+            border: 1.5px solid #212529;
+            padding: 3px 6px;
             font-family: inherit;
             font-weight: bold;
             font-size: 8.5px;
             cursor: pointer;
             color: #111;
             border-radius: 3px;
-            box-shadow: 0 2px 0 #2b180a;
+            box-shadow: 0 2px 0 #495057;
             white-space: nowrap;
         }
         .hud-btn:active { transform: translateY(1px); box-shadow: none; }
@@ -82,35 +84,37 @@
             height: auto;
             max-height: 52vh;
             aspect-ratio: 2 / 1;
-            background: linear-gradient(to bottom, #010408 0%, #0d1b2a 40%, #1b263b 50%, #2b170b 50%, #0d0402 100%);
-            border: 2px solid #271408;
+            background: #050b14;
+            border: 2px solid #4a2810;
             display: block;
             border-radius: 4px;
             flex-shrink: 1;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
         }
 
         .game-footer {
             width: 100%;
-            background: linear-gradient(135deg, #3d2311, #1a0f07);
-            border: 2px solid #271408;
+            background: linear-gradient(135deg, #2b170b, #110904);
+            border: 2px solid #4a2810;
             display: flex;
             justify-content: space-around;
             padding: 4px;
             border-radius: 4px;
             flex-shrink: 0;
             margin-bottom: env(safe-area-inset-bottom);
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.6);
         }
         .footer-btn {
-            background: linear-gradient(to bottom, #b7094c, #69022b);
+            background: linear-gradient(to bottom, #d90429, #8d0801);
             color: white;
-            border: 1.5px solid #140b04;
+            border: 1.5px solid #370617;
             padding: 5px 6px;
             font-family: inherit;
             font-weight: bold;
             font-size: 8.5px;
             cursor: pointer;
             border-radius: 3px;
-            box-shadow: 0 2px 0 #2b0011;
+            box-shadow: 0 2px 0 #370617;
             flex: 1;
             margin: 0 2px;
             text-align: center;
@@ -123,8 +127,8 @@
     <div class="game-container">
         <div class="game-header">
             <div class="hud-stats">
-                Gold: <span id="gold" style="color: #ffaa00;">350</span> | Exp: <span id="exp" style="color: #00ffaa;">0</span><br>
-                Çağ: <span id="ageText" style="color: #ff3333;">1 - Mağara</span>
+                Gold: <span id="gold" style="color: #3b00ff;">350</span> | Exp: <span id="exp" style="color: #004400;">0</span><br>
+                Çağ: <span id="ageText" style="color: #a00000;">1 - Mağara</span>
             </div>
             <div class="hud-menu" id="unitMenu"></div>
         </div>
@@ -133,8 +137,8 @@
 
         <div class="game-footer">
             <button class="footer-btn" onclick="specialAttack()">Atomik Bomba (70G)</button>
-            <button class="footer-btn" onclick="repairBase()" style="background: linear-gradient(to bottom, #007200, #003600);">Üssü Onar (50G)</button>
-            <button class="footer-btn" onclick="upgradeAge()" style="background: linear-gradient(to bottom, #ff9e00, #b26d00); color:#111;">ÇAĞ ATLA</button>
+            <button class="footer-btn" onclick="repairBase()" style="background: linear-gradient(to bottom, #2b9348, #007f5f);">Üssü Onar (50G)</button>
+            <button class="footer-btn" onclick="upgradeAge()" style="background: linear-gradient(to bottom, #ffb703, #fb8500); color:#111;">ÇAĞ ATLA</button>
         </div>
     </div>
 
@@ -145,33 +149,48 @@
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         function playSound(type) {
             if (audioCtx.state === 'suspended') audioCtx.resume();
-            let osc = audioCtx.createOscillator();
-            let gain = audioCtx.createGain();
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
             let t = audioCtx.currentTime;
 
             if (type === 'coin') {
+                let osc = audioCtx.createOscillator();
+                let gain = audioCtx.createGain();
+                osc.connect(gain); gain.connect(audioCtx.destination);
                 osc.type = 'sine';
-                osc.frequency.setValueAtTime(800, t);
-                osc.frequency.exponentialRampToValueAtTime(1600, t + 0.12);
-                gain.gain.setValueAtTime(0.1, t);
-                gain.gain.exponentialRampToValueAtTime(0.01, t + 0.12);
-                osc.start(t); osc.stop(t + 0.12);
+                osc.frequency.setValueAtTime(987.77, t); // B5
+                osc.frequency.exponentialRampToValueAtTime(1318.51, t + 0.15); // E6
+                gain.gain.setValueAtTime(0.12, t);
+                gain.gain.exponentialRampToValueAtTime(0.001, t + 0.15);
+                osc.start(t); osc.stop(t + 0.15);
             } else if (type === 'hit') {
+                let osc = audioCtx.createOscillator();
+                let gain = audioCtx.createGain();
+                osc.connect(gain); gain.connect(audioCtx.destination);
                 osc.type = 'triangle';
-                osc.frequency.setValueAtTime(140, t);
-                osc.frequency.linearRampToValueAtTime(40, t + 0.08);
-                gain.gain.setValueAtTime(0.15, t);
-                gain.gain.exponentialRampToValueAtTime(0.01, t + 0.08);
-                osc.start(t); osc.stop(t + 0.08);
-            } else if (type === 'boom') {
+                osc.frequency.setValueAtTime(120, t);
+                osc.frequency.linearRampToValueAtTime(30, t + 0.1);
+                gain.gain.setValueAtTime(0.2, t);
+                gain.gain.exponentialRampToValueAtTime(0.001, t + 0.1);
+                osc.start(t); osc.stop(t + 0.1);
+            } else if (type === 'laser') {
+                let osc = audioCtx.createOscillator();
+                let gain = audioCtx.createGain();
+                osc.connect(gain); gain.connect(audioCtx.destination);
                 osc.type = 'sawtooth';
-                osc.frequency.setValueAtTime(110, t);
-                osc.frequency.exponentialRampToValueAtTime(15, t + 0.45);
-                gain.gain.setValueAtTime(0.3, t);
-                gain.gain.exponentialRampToValueAtTime(0.01, t + 0.45);
-                osc.start(t); osc.stop(t + 0.45);
+                osc.frequency.setValueAtTime(800, t);
+                osc.frequency.exponentialRampToValueAtTime(150, t + 0.12);
+                gain.gain.setValueAtTime(0.15, t);
+                gain.gain.exponentialRampToValueAtTime(0.001, t + 0.12);
+                osc.start(t); osc.stop(t + 0.12);
+            } else if (type === 'boom') {
+                let osc = audioCtx.createOscillator();
+                let gain = audioCtx.createGain();
+                osc.connect(gain); gain.connect(audioCtx.destination);
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(90, t);
+                osc.frequency.exponentialRampToValueAtTime(10, t + 0.6);
+                gain.gain.setValueAtTime(0.35, t);
+                gain.gain.exponentialRampToValueAtTime(0.001, t + 0.6);
+                osc.start(t); osc.stop(t + 0.6);
             }
         }
 
@@ -184,6 +203,7 @@
         let enemyBaseHp = 600;
         let maxEnemyHp = 600;
         let isTransitioning = false;
+        let dayNightCycle = 0; // Gece-gündüz zaman sayacı
 
         let units = [];
         let particles = [];
@@ -228,7 +248,7 @@
                 currentAge++;
                 exp = 0;
                 playSound('coin');
-                alert(`Helal Usta! Çağ atladın, ordun güçlendi!`);
+                alert(`Harika Usta! Çağ atladın, ordun güçlendi!`);
                 updateUI();
             } else {
                 alert(`Çağ atlamak için ${req} XP gerekiyor! (Mevcut: ${exp})`);
@@ -242,8 +262,8 @@
                 updateUI();
                 for (let u of units) { if (u.team === 'enemy') u.hp -= 120; }
                 enemyBaseHp -= 45;
-                for (let i = 0; i < 40; i++) {
-                    particles.push({ x: Math.random() * 600 + 100, y: Math.random() * 300 + 50, vx: (Math.random() - 0.5) * 12, vy: (Math.random() - 0.5) * 12, life: 30, color: Math.random() > 0.5 ? "#ff0054" : "#00ffcc" });
+                for (let i = 0; i < 50; i++) {
+                    particles.push({ x: Math.random() * 600 + 100, y: Math.random() * 300 + 50, vx: (Math.random() - 0.5) * 14, vy: (Math.random() - 0.5) * 14, life: 35, color: Math.random() > 0.4 ? "#ff0054" : "#ffb703" });
                 }
             }
         }
@@ -263,32 +283,56 @@
         function gameLoop() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
+            // Dinamik Gece-Gündüz Arka Plan Efekti
+            dayNightCycle += 0.002;
+            let darkFactor = (Math.sin(dayNightCycle) + 1) / 2; // 0 (Gündüz) ile 1 (Gece) arası
+            
+            let skyGrad = ctx.createLinearGradient(0, 0, 0, 200);
+            skyGrad.addColorStop(0, `rgb(${Math.floor(2 + 40 * (1-darkFactor))}, ${Math.floor(4 + 50 * (1-darkFactor))}, ${Math.floor(15 + 80 * (1-darkFactor))})`);
+            skyGrad.addColorStop(1, `rgb(${Math.floor(15 + 40 * (1-darkFactor))}, ${Math.floor(25 + 30 * (1-darkFactor))}, ${Math.floor(40 + 20 * (1-darkFactor))})`);
+            ctx.fillStyle = skyGrad;
+            ctx.fillRect(0, 0, 800, 200);
+
+            // Yıldızlar (Gece olunca parlar)
+            ctx.fillStyle = `rgba(255, 255, 255, ${0.2 + 0.8 * darkFactor})`;
             ctx.fillRect(150, 30, 2, 2);
             ctx.fillRect(350, 60, 3, 3);
             ctx.fillRect(600, 40, 2, 2);
+            ctx.fillRect(220, 80, 2, 2);
+            ctx.fillRect(700, 50, 2, 2);
 
-            ctx.strokeStyle = "#1a0f0a";
+            // Zemin HD Gradient
+            let groundGrad = ctx.createLinearGradient(0, 200, 0, 400);
+            groundGrad.addColorStop(0, '#1b263b');
+            groundGrad.addColorStop(0.5, '#140c07');
+            groundGrad.addColorStop(1, '#050201');
+            ctx.fillStyle = groundGrad;
+            ctx.fillRect(0, 200, 800, 200);
+
+            ctx.strokeStyle = "#2b170b";
             ctx.lineWidth = 4;
             ctx.beginPath();
             ctx.moveTo(0, 340);
             ctx.lineTo(800, 340);
             ctx.stroke();
 
+            // Sol Kale (HD)
             ctx.fillStyle = currentAge >= 4 ? "#00695c" : "#3d2311";
             ctx.beginPath(); ctx.arc(60, 310, 58, 0, Math.PI, true); ctx.fill();
             ctx.lineWidth = 3; ctx.strokeStyle = "#1a0f07"; ctx.stroke();
             ctx.fillStyle = "#050302"; ctx.beginPath(); ctx.ellipse(60, 340, 22, 26, 0, 0, Math.PI * 2); ctx.fill();
 
+            // Sağ Kale (HD)
             ctx.fillStyle = currentAge >= 4 ? "#4527a0" : "#3d2311";
             ctx.beginPath(); ctx.arc(740, 310, 58, 0, Math.PI, true); ctx.fill(); ctx.stroke();
             ctx.fillStyle = "#050302"; ctx.beginPath(); ctx.ellipse(740, 340, 22, 26, 0, 0, Math.PI * 2); ctx.fill();
 
+            // Can Barları (HD)
             ctx.fillStyle = "#0a0a0a"; ctx.fillRect(18, 120, 16, 230);
-            ctx.fillStyle = "#06d6a0"; let pBarH = (playerBaseHp / maxPlayerHp) * 230; ctx.fillRect(18, 120 + (230 - pBarH), 16, pBarH);
+            ctx.fillStyle = "#00f5d4"; let pBarH = (playerBaseHp / maxPlayerHp) * 230; ctx.fillRect(18, 120 + (230 - pBarH), 16, pBarH);
 
             ctx.fillStyle = "#0a0a0a"; ctx.fillRect(766, 120, 16, 230);
-            ctx.fillStyle = "#ef476f"; let eBarH = (enemyBaseHp / maxEnemyHp) * 230; ctx.fillRect(766, 120 + (230 - eBarH), 16, eBarH);
+            ctx.fillStyle = "#ff0054"; let eBarH = (enemyBaseHp / maxEnemyHp) * 230; ctx.fillRect(766, 120 + (230 - eBarH), 16, eBarH);
 
             enemySpawnTimer++;
             let spawnInterval = Math.max(45, 105 - (currentAge * 6) - (levelRound * 3));
@@ -310,11 +354,19 @@
                         let distance = Math.abs(u.x - target.x);
                         if (u.team === 'player' && target.x > u.x && distance <= u.range) {
                             combat = true; target.hp -= u.attack;
-                            if (Math.random() < 0.3) playSound('hit');
-                            if (target.hp <= 0) { exp += 25 * currentAge; gold += 12; floatingTexts.push({ x: target.x, y: target.y - 40, text: "+12G", life: 30, color: "#ffaa00" }); playSound('coin'); }
+                            if (Math.random() < 0.35) {
+                                if (u.weapon === 'laser') playSound('laser');
+                                else playSound('hit');
+                            }
+                            if (target.hp <= 0) { 
+                                exp += 25 * currentAge; 
+                                gold += 12; 
+                                floatingTexts.push({ x: target.x, y: target.y - 40, text: "+12G", life: 30, color: "#ffb703" }); 
+                                playSound('coin'); 
+                            }
                         } else if (u.team === 'enemy' && target.x < u.x && distance <= u.range) {
                             combat = true; target.hp -= u.attack;
-                            if (Math.random() < 0.3) playSound('hit');
+                            if (Math.random() < 0.35) playSound('hit');
                         }
                     }
                 }
@@ -324,6 +376,7 @@
 
                 if (!combat) u.x += u.speed;
 
+                // Ünite Çizimi HD
                 ctx.fillStyle = u.color; ctx.fillRect(u.x - 7, u.y - 32, 14, 32);
                 ctx.fillStyle = "#fffaed"; ctx.beginPath(); ctx.arc(u.x, u.y - 38, 6, 0, Math.PI * 2); ctx.fill();
                 ctx.fillStyle = u.team === 'player' ? "#1d3557" : "#450920"; ctx.fillRect(u.x - 7, u.y - 45, 14, 4);
@@ -336,8 +389,9 @@
                 }
                 ctx.stroke();
 
+                // Ünite Can Barı
                 ctx.fillStyle = "#000"; ctx.fillRect(u.x - 12, u.y - 53, 24, 4);
-                ctx.fillStyle = u.team === 'player' ? "#00ffcc" : "#ff0054"; ctx.fillRect(u.x - 12, u.y - 53, (u.hp / u.maxHp) * 24, 4);
+                ctx.fillStyle = u.team === 'player' ? "#00f5d4" : "#ff0054"; ctx.fillRect(u.x - 12, u.y - 53, (u.hp / u.maxHp) * 24, 4);
             }
 
             units = units.filter(u => u.hp > 0);
@@ -350,25 +404,24 @@
 
             for (let i = particles.length - 1; i >= 0; i--) {
                 let p = particles[i]; p.x += p.vx; p.y += p.vy; p.life--;
-                ctx.fillStyle = p.color; ctx.fillRect(p.x, p.y, 5, 5);
+                ctx.fillStyle = p.color; ctx.fillRect(p.x, p.y, 4, 4);
                 if (p.life <= 0) particles.splice(i, 1);
             }
 
-            // GÜVENLİ TUR / BÖLÜM GEÇİŞİ (BUGFREE)
             if (enemyBaseHp <= 0 && !isTransitioning) {
                 isTransitioning = true;
                 levelRound++;
                 maxEnemyHp = 600 + (levelRound * 150);
                 enemyBaseHp = maxEnemyHp;
                 gold += 200;
-                units = []; // Savaş alanını temizle
+                units = [];
                 playSound('boom');
-                alert(`Helal Usta! Düşman kalesini yıktın! Tur ${levelRound} başlıyor (+200 Altın kazandın)!`);
+                alert(`Helal Usta! Düşman kalesini dağıttın! Tur ${levelRound} başlıyor (+200 Altın)!`);
                 setTimeout(() => { isTransitioning = false; }, 1000);
             }
 
             if (playerBaseHp <= 0) {
-                alert("Üssün yıkıldı usta! Sağlık olsun, baştan başlıyoruz.");
+                alert("Üssün yıkıldı usta! Sağlık olsun, yeni turda intikamını alırsın.");
                 location.reload();
             }
 
